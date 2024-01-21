@@ -14,6 +14,7 @@ class State{
     isEmpty(){
         return !(this.name && this.data);
     }
+    
 
 }
 

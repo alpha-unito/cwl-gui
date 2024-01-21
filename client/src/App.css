@@ -39,6 +39,8 @@ body{background:var(--primary);font-family: "Montserrat",sans-serif;font-size: v
 
 /* SUMMARY */
 .app .summary .name{text-align:center;font-size:18px;font-weight:600}
-.app .summary .editor{border-radius:10px;margin-top:40px;overflow:hidden;}
-.app .summary .editor pre{max-height:500px;min-height:500px;border-radius:5px}
+.app .summary .editor{margin-top:40px;overflow:hidden;text-align: right;}
+.app .summary .editor pre{height:500px;border:0px;}
 .app .summary .editor .language-yaml{font-size:12px!important}
+.app .summary .editor button{background:0 0;border:1px solid var(--font);color:var(--font);padding:3px 10px;border-radius:3px;font-size:12px;cursor:pointer}
+.app .summary .editor > .monaco-editor{text-align:left;margin:5px 0px;padding: 1em;margin: .5em 0;}

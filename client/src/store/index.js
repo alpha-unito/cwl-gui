@@ -2,7 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import State from '../models/State';
 
 const cwlReducer = (state = new State(), action) => {
-    if(action.type == "set"){
+    if(action.type === "set"){
         return new State(action.value.name, action.value.content);
     }
 

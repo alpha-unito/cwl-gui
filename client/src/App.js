@@ -6,11 +6,11 @@ import Actions from './components/Actions';
 import Uploader from './components/Uploader';
 
 function App() {
-  const currentState = useSelector((state) => state.cwl_data);
+  const cwl = useSelector((state) => state.cwl_data);
 
   return (
     <div className='app'>
-      {!currentState.isEmpty() ? (
+      {!cwl.isEmpty() ? (
         <>
           <Summary className="summary" />
           <Content className="content" />
