@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-
+import React, { useEffect, useState } from 'react';
 /**
  * Uploader: A component for uploading .cwl files.
  * 
@@ -9,23 +9,46 @@ import { useDispatch } from 'react-redux';
  * Once a file is selected, its content is read and dispatched to the Redux store.
  */
 function Uploader({ className }) {
-  
   const dispatch = useDispatch();
+  const [fileData, setFileData] = useState(null);
 
-  // Handles file selection and dispatches its content to the Redux store.
   const handleFileChange = (event) => {
-      const file = event.target.files[0];
-
+    const file = event.target.files[0];
+    if (file) {
       const reader = new FileReader();
-      
       reader.onload = (e) => {
-        const content = e.target.result;
-
-        dispatch({ type: 'set', value: { name: file.name, content: content } });
+        setFileData({ content: e.target.result, name: file.name });
       };
-      
       reader.readAsText(file);
+    }
   };
+
+  useEffect(() => {
+    if (fileData) {
+      fetch('http://localhost:5000/api/data', {
+        method: 'POST',
+        body: JSON.stringify({ content: fileData.content }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        dispatch({ 
+          type: 'set', 
+          value: { 
+            name: fileData.name, 
+            content: fileData.content, 
+            object: data.message,
+            activeNode: ''
+          } 
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  }, [fileData, dispatch]);
 
   return (
     <div className={className}>
