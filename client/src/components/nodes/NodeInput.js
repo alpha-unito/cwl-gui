@@ -13,7 +13,6 @@ function NodeInput({ data }) {
         </div>
         <div className='node-content'>
           <p>Type: <span>{data.type}</span></p>
-          <p></p>
         </div>
         <Handle type="source" position={Position.Bottom}/>
     </div>

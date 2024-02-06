@@ -2,22 +2,23 @@ import { Handle, Position} from 'reactflow';
 import React, { useCallback } from 'react';
 import { useSelector  } from 'react-redux';
 
-function NodeOutput({ data }) {  
+function NodeStep({ data }) {  
   const node = useSelector((state) => state.cwl_data.activeNode);
   const classActive = data.id == node ? 'active' : '';
 
   return (
-    <div id={data.id} className={`node-base type-output ${classActive}`}>
+    <div id={data.id} className={`node-base type-step ${classActive}`}>
         <Handle type="target" position={Position.Top} />
         <div className='node-header'>
           {data.label}
         </div>
         <div className='node-content'>
-          <p>Type: <span>{data.type}</span></p>
+          <p>Value: <span>{data.value}</span></p>
         </div>
+        <Handle type="source" position={Position.Bottom}/>
     </div>
 
   );
 }
 
-export default NodeOutput;
+export default NodeStep;

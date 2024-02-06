@@ -46,10 +46,12 @@ body{background:var(--primary);font-family: "Montserrat",sans-serif;font-size: v
 .app .summary .editor > .monaco-editor{text-align:left;margin:5px 0px;padding: 1em;margin: .5em 0;}
 
 /* GRAPH */
-.node-base{min-height:42px;background:#222c38;border-radius:1px;min-width: 100px;}
+.node-base{min-height:50px;background:#222c38;border-radius:1px;width: 150px;}
 .node-base .node-header{padding:5px;font-size:7px;text-align:left;font-weight:600;}
 .node-base.type-input .node-header{border-bottom:1px solid #0c0c9d;background:linear-gradient(90deg,rgba(12,12,157,.35) 0,rgba(9,9,121,.13608771145176823) 100%)}
 .node-base.type-output .node-header{border-bottom: 1px solid #adcf06;background: linear-gradient(90deg,rgba(172, 145, 0, 0.35) 0,rgba(121, 103, 9, 0.14) 100%);}
+.node-base.type-argument .node-header{border-bottom:1px solid #6b009c;background:linear-gradient(90deg,rgba(135,15,255,.35) 0,rgba(135,15,255,.04) 100%)}
+.node-base.type-step .node-header{border-bottom:1px solid #00b22d;background:linear-gradient(90deg,rgba(0, 185, 28, 0.641) 0,rgba(15, 255, 59, 0.04) 100%)}
 .node-base .node-content{padding:5px}
 .node-base .node-content p{margin:0;font-size:6px;color:#c5c5c5}
 .node-base .node-content p span{font-weight:700}
