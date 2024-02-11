@@ -14,19 +14,28 @@ function CodeBlock({ language }) {
         minimap: { enabled: false }
     };
 
-    function onChange(newValue, e) {
-        dispatch({ type: 'set', value: { name: cwl.name, content: newValue } });
-    }
+    const handleEditorChange = (newValue, e) => {
+        dispatch({
+            type: 'set', 
+            value: { 
+              name: cwl.name || "", 
+              content: newValue, 
+              object: cwl.cwlobject || "",
+              node: cwl.activeNode || "",
+              nodePositions: cwl.nodePositions || {}
+            }
+        });
+    };
 
     return (
         <div className='monaco-editor'>
         <MonacoEditor
-            height="500"
+            height="calc(100vh - 61px)"
             language={language}
             theme="vs-dark"
             value={cwl.data}
             options={options}
-            onChange={onChange}
+            onChange={handleEditorChange}
         />        
         </div>
 

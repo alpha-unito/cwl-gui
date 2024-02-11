@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import ReactFlow, { addEdge, applyEdgeChanges, applyNodeChanges, Controls, MarkerType, isEdge } from 'reactflow';
+import { useCallback, useState, useEffect } from 'react';
+import ReactFlow, { addEdge, applyEdgeChanges, applyNodeChanges, Controls, MarkerType } from 'reactflow';
 import 'reactflow/dist/style.css';
 import NodeInput from './nodes/NodeInput.js';
 import NodeOutput from './nodes/NodeOutput.js';
@@ -19,22 +19,27 @@ function Graph({initialNodes, initialEdges}) {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
-
   const cwl = useSelector((state) => state.cwl_data);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
+
+  useEffect(() => {
+    setNodes(initialNodes);
+  }, [initialNodes]);
+
+  useEffect(() => {
+    setEdges(initialEdges);
+  }, [initialEdges]);
 
   const onNodeClick = (event, node) => {
-    //alert(JSON.stringify(node));
-    console.log(node.id);
-    console.log(cwl.activeNode);
-    let nodeid = (cwl.activeNode == node.id) ? "" : node.id; 
+    let nodeid = (cwl.activeNode === node.id) ? "" : node.id; 
     dispatch({ 
       type: 'set', 
       value: { 
         name: cwl.name, 
         content: cwl.data, 
         object: cwl.cwlobject,
-        node: nodeid
+        node: nodeid,
+        nodePositions: cwl.nodePositions
       } 
     });
   };
@@ -47,6 +52,7 @@ function Graph({initialNodes, initialEdges}) {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges]
   );
+  
   const onConnect = useCallback(
     (connection) => {
       const newEdge = {
@@ -62,7 +68,7 @@ function Graph({initialNodes, initialEdges}) {
 
   const onEdgeClick = (event, edge) => {
     let newEdges=null;
-    if(edge.id != selectedEdgeId){
+    if(edge.id !== selectedEdgeId){
       setSelectedEdgeId(edge.id);
       newEdges = edges.map(e => {
         if (e.id === edge.id) {
@@ -86,18 +92,34 @@ function Graph({initialNodes, initialEdges}) {
     }
   };
 
+  const onNodeDragStop = useCallback((event, node) => {
+    dispatch({ 
+      type: 'set', 
+      value: { 
+        name: cwl.name, 
+        content: cwl.data, 
+        object: cwl.cwlobject,
+        node: cwl.activeNode,
+        nodePositions: { ...cwl.nodePositions, [node.id]: node.position }
+      } 
+    });
+    console.log(node.position );
+  }, [dispatch, cwl]);
+
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: 'calc(100vh - 41px)' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeDragStop={onNodeDragStop}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         onNodeClick={onNodeClick}
         onEdgeClick={onEdgeClick}
         onPaneClick={onPaneClick}
+        nodeDragThreshold={1}
         fitView
       >
         <Controls />

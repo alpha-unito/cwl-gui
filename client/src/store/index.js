@@ -3,7 +3,9 @@ import State from '../models/State';
 
 const cwlReducer = (state = new State(), action) => {
     if(action.type === "set"){
-        return new State(action.value.name, action.value.content, action.value.object, action.value.node);
+        return new State(action.value.name, action.value.content, action.value.object, action.value.node, action.value.nodePositions);
+    }else if(action.type === "reset"){
+        return new State();
     }
 
     return new State();

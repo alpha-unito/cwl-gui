@@ -1,10 +1,10 @@
 import { Handle, Position} from 'reactflow';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector  } from 'react-redux';
 
 function NodeStep({ data }) {  
   const node = useSelector((state) => state.cwl_data.activeNode);
-  const classActive = data.id == node ? 'active' : '';
+  const classActive = data.id === node ? 'active' : '';
 
   return (
     <div id={data.id} className={`node-base type-step ${classActive}`}>
@@ -13,7 +13,7 @@ function NodeStep({ data }) {
           {data.label}
         </div>
         <div className='node-content'>
-          <p>Value: <span>{data.value}</span></p>
+          <p>Run: <span>{data.run}</span></p>
         </div>
         <Handle type="source" position={Position.Bottom}/>
     </div>

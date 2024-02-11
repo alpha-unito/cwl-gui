@@ -4,20 +4,19 @@ import { useSelector } from 'react-redux';
 
 function CommandLineTool() {
   const object = useSelector((state) => state.cwl_data.cwlobject);
+  const savedPositions = useSelector((state) => state.cwl_data.nodePositions);
 
   const initialNodes = []; // Array to hold all nodes for rendering
   let currentIndex = 0; // Index to track the position of nodes horizontally
 
   // Helper function to create a node
-  const createNode = (idPrefix, index, type, positionY, data) => {
-    const id = `${idPrefix}${index}`;
+  const createNode = (id, index, type, positionY, data) => {
+    const defaultPosition = { x: index * 160, y: positionY };
+    const position = savedPositions[id] ? { x: savedPositions[id].x, y: savedPositions[id].y } : defaultPosition;
     return {
       id: id,
       type: type,
-      position: {
-        x: index * 160, // Spread nodes horizontally
-        y: positionY
-      },
+      position: position,
       data: {
         id: id,
         label: data.label || type, // Use provided label or default to type
@@ -30,7 +29,7 @@ function CommandLineTool() {
   Object.keys(object.inputs).forEach((key, index) => {
     const input = object.inputs[key];
     const label = input.id.split('#')[1] || "Input";
-    initialNodes.push(createNode('in', index, 'nodeInput', 0, {label, extra: {type: input.type}}));
+    initialNodes.push(createNode(label, index, 'nodeInput', 0, {label, extra: {type: input.type}}));
     currentIndex++;
   });
 
@@ -48,7 +47,7 @@ function CommandLineTool() {
   Object.keys(object.outputs).forEach((key, index) => {
     const output = object.outputs[key];
     const label = output.id.split('#')[1] || "Output";
-    initialNodes.push(createNode('ou', index, 'nodeOutput', 100, {label, extra: {type: output.type}}));
+    initialNodes.push(createNode(label, index, 'nodeOutput', 100, {label, extra: {type: output.type}}));
   });
 
   const initialEdges = [];

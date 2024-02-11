@@ -17,13 +17,14 @@
   --font: #d7d7d7;
   --border: #ffffff21;
   --font-size: 15px;
-}  
+  --font-hover: #fceeba;
+}
 
 /* GENERAL */
 body{background:var(--primary);font-family: "Montserrat",sans-serif;font-size: var(--font-size);color:var(--font)}
-.app{display:flex;align-items:center;height:100vh}
+.app{display:flex;align-items:center;height:100vh;flex-wrap: wrap;}
 .app .openfile{margin:0 auto}
-.app .summary{width:20%;min-width:300px;background:var(--secondary);height:100vh;border-right:1px solid var(--border);padding: 0 20px;}
+.app .summary{width:20%;min-width:300px;background:var(--secondary);height: calc(100vh - 41px);border-right:1px solid var(--border);}
 .app .filemanager{max-width:600px;margin:0 auto}
 .app .openfile>p{color:var(--font);font-size:70px;text-align:center;margin-bottom:30px;margin-top:0px;}
 .app .filemanager .upload{background:var(--secondary);color:var(--font);border:2px dashed var(--border);position: relative;}
@@ -36,17 +37,32 @@ body{background:var(--primary);font-family: "Montserrat",sans-serif;font-size: v
 .app .filemanager .upload .upload-content label{font-size:15px;line-height:27px}
 .app .filemanager .upload .upload-content span svg{height:35px;margin-right:10px}
 .app .filemanager .upload .upload-content span{display:flex;justify-content:center;align-items:center}
+.app .content{width:60%;height: calc(100vh - 41px)}
+.app .actions{width: calc(17% - 40px);}
+.app .actions{width:calc(17% - 40px);background:var(--secondary);height: calc(100vh - 41px);border-left:1px solid var(--border);padding:0 20px}
+.button:hover{color:var(--font-hover) !important;border-color:var(--font-hover) !important}
+.react-flow__panel.react-flow__attribution.bottom.right{display:none}
+
+/* TOOLBAR */
+.toolbar{margin:0;border-bottom:1px solid var(--border);padding:10px 20px;width:100%;height:20px;display:flex}
+.toolbar{margin:0;border-bottom:1px solid var(--border);padding:10px 20px;width:100%;min-height:10px;height: 20px;justify-content: space-between;}
+.toolbar p{margin:0;display: inline-block;}
+.toolbar .info p span{font-weight:800;color:var(--font-hover)}
+.toolbar .info button{margin-right:10px;min-width:100px;background:0 0;border:1px solid var(--font);border-radius:3px;color:var(--font);padding:2px 11px;cursor: pointer;}
+.toolbar .info p{margin-right:15px;font-size:13px}
+.toolbar>p span{font-size:10px}
+.button.disable{opacity:.5;pointer-events:none}
 
 /* SUMMARY */
 .app .summary .name{text-align:center;font-size:18px;font-weight:600}
-.app .summary .editor{margin-top:40px;overflow:hidden;text-align: right;}
-.app .summary .editor pre{height:500px;border:0px;}
+.app .summary .editor{overflow:hidden;text-align: right;position: relative;}
+.app .summary .editor pre{height: calc(100vh - 61px);border:0px;margin: 0;border-radius: 0;padding:10px}
 .app .summary .editor .language-yaml{font-size:12px!important}
-.app .summary .editor button{background:0 0;border:1px solid var(--font);color:var(--font);padding:3px 10px;border-radius:3px;font-size:12px;cursor:pointer}
-.app .summary .editor > .monaco-editor{text-align:left;margin:5px 0px;padding: 1em;margin: .5em 0;}
+.app .summary .editor > .monaco-editor{text-align:left;margin:5px 0px;padding: 10px;margin: .5em 0;margin: 0;}
+.app .summary .editor button{background:0 0;border:1px solid var(--font);background: #272822;color:var(--font);z-index: 2;padding:3px 10px;border-radius:3px;font-size:12px;cursor:pointer;position:absolute;right:10px;top:10px}
 
 /* GRAPH */
-.node-base{min-height:50px;background:#222c38;border-radius:1px;width: 150px;}
+.node-base{min-height:50px;background:#222c38;border-radius:1px;width: 150px;border:1px solid transparent}
 .node-base .node-header{padding:5px;font-size:7px;text-align:left;font-weight:600;}
 .node-base.type-input .node-header{border-bottom:1px solid #0c0c9d;background:linear-gradient(90deg,rgba(12,12,157,.35) 0,rgba(9,9,121,.13608771145176823) 100%)}
 .node-base.type-output .node-header{border-bottom: 1px solid #adcf06;background: linear-gradient(90deg,rgba(172, 145, 0, 0.35) 0,rgba(121, 103, 9, 0.14) 100%);}
@@ -55,4 +71,4 @@ body{background:var(--primary);font-family: "Montserrat",sans-serif;font-size: v
 .node-base .node-content{padding:5px}
 .node-base .node-content p{margin:0;font-size:6px;color:#c5c5c5}
 .node-base .node-content p span{font-weight:700}
-.node-base.active{box-shadow:0 0 0 1px #b6b304}
+.node-base.active{border:1px solid #b6b304}

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+
 /**
  * Uploader: A component for uploading .cwl files.
  * 
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from 'react';
  * Once a file is selected, its content is read and dispatched to the Redux store.
  */
 function Uploader({ className }) {
+  const APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
   const dispatch = useDispatch();
   const [fileData, setFileData] = useState(null);
 
@@ -25,7 +27,7 @@ function Uploader({ className }) {
 
   useEffect(() => {
     if (fileData) {
-      fetch('http://localhost:5000/api/data', {
+      fetch(APP_SERVER_URL+'api/data', {
         method: 'POST',
         body: JSON.stringify({ content: fileData.content }),
         headers: {
@@ -40,7 +42,7 @@ function Uploader({ className }) {
             name: fileData.name, 
             content: fileData.content, 
             object: data.message,
-            activeNode: ''
+            node: ''
           } 
         });
       })
@@ -48,7 +50,7 @@ function Uploader({ className }) {
         console.error('Error:', error);
       });
     }
-  }, [fileData, dispatch]);
+  }, [APP_SERVER_URL,fileData, dispatch]);
 
   return (
     <div className={className}>

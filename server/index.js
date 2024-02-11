@@ -23,9 +23,9 @@ app.post('/api/data', (req, res) => {
     })
     .catch((e) => {
         if(e instanceof cwlTsAuto.ValidationException) {
-            console.log(e.toString())
+            res.json({ message: e.toString() });
         } else {
-            console.log(e)
+            res.json({ message: e });
         }
     })
 });
