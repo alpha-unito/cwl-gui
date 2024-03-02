@@ -1,7 +1,7 @@
 import { useSelector,useDispatch } from 'react-redux';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFloppyDisk, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Toolbar: Renders a toolbar component with buttons for file manipulation.
@@ -21,8 +21,8 @@ function Toolbar({ className }) {
       <p>cwl-gui <span>v{APP_VERSION}</span></p>
       <div className="info">
         <p className="file">You are editing <span>{cwl.name}</span></p>
-        <button type="button" className='button' onClick={resetState}><FontAwesomeIcon icon={faArrowsRotate} /> Change file</button>
-        <button type="button" className='button disable'><FontAwesomeIcon icon={faFloppyDisk} /> Save</button>
+        <button type="button" className='button' onClick={resetState}><FontAwesomeIcon icon={faFolderOpen} /> Change file</button>
+        <button type="button" className='button disable'><FontAwesomeIcon icon={faFloppyDisk} /> Export</button>
       </div>
     </div>
   );

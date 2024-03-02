@@ -31,15 +31,13 @@ function Graph({initialNodes, initialEdges}) {
   }, [initialEdges]);
 
   const onNodeClick = (event, node) => {
-    let nodeid = (cwl.activeNode === node.id) ? "" : node.id; 
+    let newid = node.data.typeNode+"_"+node.data.index;
+    let oldid = (cwl.activeNode !== "") ? cwl.activeNode : "";
+    let nodeid = (oldid === newid) ? "" : newid; 
     dispatch({ 
       type: 'set', 
       value: { 
-        name: cwl.name, 
-        content: cwl.data, 
-        object: cwl.cwlobject,
-        node: nodeid,
-        nodePositions: cwl.nodePositions
+        activeNode: nodeid,
       } 
     });
   };
@@ -93,14 +91,12 @@ function Graph({initialNodes, initialEdges}) {
   };
 
   const onNodeDragStop = useCallback((event, node) => {
+    let newid = node.data.typeNode+"_"+node.data.index;
+
     dispatch({ 
       type: 'set', 
       value: { 
-        name: cwl.name, 
-        content: cwl.data, 
-        object: cwl.cwlobject,
-        node: cwl.activeNode,
-        nodePositions: { ...cwl.nodePositions, [node.id]: node.position }
+        nodePositions: { ...cwl.nodePositions, [newid]: node.position }
       } 
     });
     console.log(node.position );

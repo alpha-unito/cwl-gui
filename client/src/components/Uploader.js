@@ -40,9 +40,8 @@ function Uploader({ className }) {
           type: 'set', 
           value: { 
             name: fileData.name, 
-            content: fileData.content, 
-            object: data.message,
-            node: ''
+            data: data.string, 
+            cwlobject: data.object,
           } 
         });
       })

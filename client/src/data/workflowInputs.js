@@ -12,43 +12,15 @@ const secondaryFiles = {
 const inputBinding = {
     loadContents: {
         required: false,
-        type: ["boolean"],
-    },
-    position: {
-        required: false,
-        type: ["int","expression"],
-        validation:{
-            regex: ["^[0-9]+$", null],
-            message: ["Only numbers are allowed", null]
-        }
-    },
-    prefix: {
-        required: false,
-        type: ["string"],
-    },
-    separate: {
-        required: false,
-        type: ["boolean"],
-    },
-    itemSeparator: {
-        required: false,
-        type: ["string"],
-    },
-    valueFrom: {
-        required: false,
-        type: ["string","expression"],
-    },
-    shellQuote: {
-        required: false,
-        type: ["boolean"],
-    },
+        type: ["boolean"]
+    }
 }
 
-export const cltInputs = {
+export const workflowInputs = {
     type: {
         required: true,
         type: ["select"],
-        options: ["stdin","File","Directory","string","int","float","long","double","boolean","Any","File[]","Directory[]","string[]","int[]","float[]","long[]","double[]"],
+        options: ["File","Directory","string","int","float","long","double","boolean","Any","File[]","Directory[]","string[]","int[]","float[]","long[]","double[]"],
     },
     id: {
         required: false,

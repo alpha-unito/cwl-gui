@@ -1,14 +1,17 @@
 import {configureStore} from '@reduxjs/toolkit';
-import State from '../models/State';
+import {initialState} from '../models/State';
 
-const cwlReducer = (state = new State(), action) => {
+const cwlReducer = (state = initialState, action) => {
     if(action.type === "set"){
-        return new State(action.value.name, action.value.content, action.value.object, action.value.node, action.value.nodePositions);
+        return {
+            ...state, 
+            ...action.value
+        };
     }else if(action.type === "reset"){
-        return new State();
+        return initialState;
     }
 
-    return new State();
+    return state;
 };
 
 const store = configureStore({

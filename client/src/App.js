@@ -5,13 +5,14 @@ import Summary from './components/Summary';
 import Actions from './components/Actions';
 import Uploader from './components/Uploader';
 import Toolbar from './components/Toolbar';
+import {isStateEmpty} from './models/State';
 
 function App() {
   const cwl = useSelector((state) => state.cwl_data);
 
   return (
     <div className='app'>
-      {!cwl.isEmpty() ? (
+      {!isStateEmpty(cwl) ? (
         <>
           <Toolbar className="toolbar" />
           <Summary className="summary" />

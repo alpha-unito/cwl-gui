@@ -4,10 +4,11 @@ import { useSelector  } from 'react-redux';
 
 function NodeStep({ data }) {  
   const node = useSelector((state) => state.cwl_data.activeNode);
-  const classActive = data.id === node ? 'active' : '';
+  const nodeid = data.typeNode+"_"+data.index;
+  const classActive = nodeid === node ? 'active' : '';
 
   return (
-    <div id={data.id} className={`node-base type-step ${classActive}`}>
+    <div id={nodeid} className={`node-base type-step ${classActive}`}>
         <Handle type="target" position={Position.Top} />
         <div className='node-header'>
           {data.label}

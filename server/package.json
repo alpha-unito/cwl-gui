@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "cwl-ts-auto": "^0.1.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.0",
+    "uuid": "^9.0.1"
   }
 }

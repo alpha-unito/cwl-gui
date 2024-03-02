@@ -18,11 +18,7 @@ function CodeBlock({ language }) {
         dispatch({
             type: 'set', 
             value: { 
-              name: cwl.name || "", 
-              content: newValue, 
-              object: cwl.cwlobject || "",
-              node: cwl.activeNode || "",
-              nodePositions: cwl.nodePositions || {}
+              data: newValue, 
             }
         });
     };

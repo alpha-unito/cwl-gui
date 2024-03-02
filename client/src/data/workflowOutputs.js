@@ -9,37 +9,11 @@ const secondaryFiles = {
     }
 }
 
-const outputBinding = {
-    loadContents: {
-        dependency: {
-            type: ["File","File[]"]
-        },
-        required: false,
-        type: ["boolean"],
-    },
-    loadListing: {
-        dependency: {
-            type: ["Directory","Directory[]"]
-        },
-        required: false,
-        type: ["enum"],
-        values: ["no_listing","shallow_listing","deep_listing"]
-    },
-    glob: {
-        required: false,
-        type: ["string","expression","string[]"]
-    },
-    outputEval: {
-        required: false,
-        type: ["expression"],
-    },
-}
-
-export const cltOutputs = {
+export const workflowOutputs = {
     type: {
         required: true,
         type: ["select"],
-        options: ["stdout","stderr","File","Directory","string","int","float","long","double","boolean","Any","File[]","Directory[]","string[]","int[]","float[]","long[]","double[]"],
+        options: ["File","Directory","string","int","float","long","double","boolean","Any","File[]","Directory[]","string[]","int[]","float[]","long[]","double[]"],
     },
     id: {
         required: false,
@@ -75,10 +49,19 @@ export const cltOutputs = {
         required: false,
         type: ["string","expression"],
     },
-    outputBinding: {
+    outputSource: {
         required: false,
-        type: ["component"],
-        component: outputBinding
+        type: ["string","string[]"],
+    },
+    linkMerge: {
+        required: false,
+        type: ["enum"],
+        values: ["merge_nested","merge_flattened"]
+    },
+    pickValue: {
+        required: false,
+        type: ["enum"],
+        values: ["first_non_null","the_only_non_null","all_non_null"]
     },
     
 }

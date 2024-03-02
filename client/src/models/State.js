@@ -1,25 +1,21 @@
-// State: A class to represent a state for file cwl in Redux
-class State{
+// State: Represent a state for file cwl in Redux
+const initialState = {
+    name: '',
+    data: '',
+    cwlobject: '',
+    activeNode: '',
+    nodePositions: {},
+    generalModified: false,
+    nodeModified: false,
+};
 
-    constructor(name = '', data = '', cwlobject = '', node = '', nodePositions = {}){
-        this.name = name;
-        this.data = data;
-        this.cwlobject = cwlobject;
-        this.activeNode = node;
-        this.nodePositions = nodePositions;
-
-    }
-
-    /**
-     * Checks if the state is empty.
-     * 
-     * @returns {boolean} True if both name and data are false, otherwise false.
-     */
-    isEmpty(){
-        return !(this.cwlobject);
-    }
-    
-
+/**
+ * Checks if the state is empty.
+ * 
+ * @returns {boolean} True if both name and data are false, otherwise false.
+ */
+function isStateEmpty(state) {
+    return !state.cwlobject;
 }
 
-export default State;
+export { initialState, isStateEmpty };
