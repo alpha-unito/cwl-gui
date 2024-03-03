@@ -6,6 +6,7 @@ import Actions from './components/Actions';
 import Uploader from './components/Uploader';
 import Toolbar from './components/Toolbar';
 import {isStateEmpty} from './models/State';
+import Exception from './components/Exception';
 
 function App() {
   const cwl = useSelector((state) => state.cwl_data);
@@ -25,6 +26,7 @@ function App() {
           <Uploader className="filemanager" />
         </div>
       )}
+      {cwl.errorEnabled && <Exception content={cwl.errorEnabled} className="exception" title="CWL Exception"/>}
     </div>
   );
 }

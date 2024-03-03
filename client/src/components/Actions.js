@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import cloneDeep from 'lodash/cloneDeep';
 
-
 /**
  * Actions: Right sidebar
  * 
@@ -92,19 +91,33 @@ function Actions({ className }) {
       })
       .then(response => response.json())
       .then(data => {
+        if(data.result) {
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              data: data.string,
+              cwlobject: data.object,
+              nodeModified: false,
+            } 
+          });        
+        }else{
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorEnabled: data.message,
+            } 
+          });  
+        }
+      })
+      .catch(error => {
         dispatch({ 
           type: 'set', 
           value: { 
-            data: data.string,
-            cwlobject: data.object,
-            nodeModified: false,
+            errorEnabled: error,
           } 
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
+        }); 
       });
-  };
+    };
 
   return (
   <div className={className}>

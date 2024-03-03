@@ -55,17 +55,32 @@ function Summary({ className }) {
       })
       .then(response => response.json())
       .then(data => {
+        if(data.result) {
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              data: data.string, 
+              cwlobject: data.object,
+            } 
+          });          
+        }else{
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorEnabled: data.message,
+            } 
+          });  
+        }
+      })
+      .catch(error => {
         dispatch({ 
           type: 'set', 
           value: { 
-            data: data.string,
-            cwlobject: data.object,
+            errorEnabled: error,
           } 
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
+        });  
       });
+
     }
     setPrevEditor(0);
   }, [editor, prevEditor, setPrevEditor, APP_SERVER_URL, cwl, dispatch]);
@@ -106,14 +121,15 @@ function Summary({ className }) {
 
 
     fetch(`${APP_SERVER_URL}api/general`, {
-        method: 'POST',
-        body: JSON.stringify({ content: cwltemp }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
+      method: 'POST',
+      body: JSON.stringify({ content: cwltemp }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.result) {
         dispatch({ 
           type: 'set', 
           value: { 
@@ -121,11 +137,25 @@ function Summary({ className }) {
             cwlobject: data.object,
             generalModified: false,
           } 
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+        });          
+      }else{
+        dispatch({ 
+          type: 'set', 
+          value: { 
+            errorEnabled: data.message,
+          } 
+        });  
+      }
+    })
+    .catch(error => {
+      dispatch({ 
+        type: 'set', 
+        value: { 
+          errorEnabled: error,
+        } 
+      });  
+    });
+
   };
 
   return (

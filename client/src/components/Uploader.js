@@ -36,18 +36,33 @@ function Uploader({ className }) {
       })
       .then(response => response.json())
       .then(data => {
+        if(data.result) {
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              name: fileData.name, 
+              data: data.string, 
+              cwlobject: data.object,
+            } 
+          });          
+        }else{
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorEnabled: data.message,
+            } 
+          });  
+        }
+      })
+      .catch(error => {
         dispatch({ 
           type: 'set', 
           value: { 
-            name: fileData.name, 
-            data: data.string, 
-            cwlobject: data.object,
+            errorEnabled: error,
           } 
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
+        });       
       });
+
     }
   }, [APP_SERVER_URL,fileData, dispatch]);
 

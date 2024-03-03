@@ -7,6 +7,7 @@ const initialState = {
     nodePositions: {},
     generalModified: false,
     nodeModified: false,
+    errorEnabled: ''
 };
 
 /**
