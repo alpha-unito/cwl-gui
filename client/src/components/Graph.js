@@ -53,13 +53,14 @@ function Graph({initialNodes, initialEdges}) {
   
   const onConnect = useCallback(
     (connection) => {
-      const newEdge = {
+      /*const newEdge = {
         ...connection,
         markerEnd: {
           type: MarkerType.ArrowClosed,
         },
       };
-      setEdges((eds) => addEdge(newEdge, eds));
+      setEdges((eds) => addEdge(newEdge, eds));*/
+      console.log("Adding new connections is not allowed.");
     },
     [setEdges]
   );
