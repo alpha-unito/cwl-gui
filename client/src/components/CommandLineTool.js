@@ -22,7 +22,7 @@ function CommandLineTool() {
       position: position,
       data: {
         label: id,
-        index: index,
+        index: index, 
         ...data, // Spread any extra data
       }
     };

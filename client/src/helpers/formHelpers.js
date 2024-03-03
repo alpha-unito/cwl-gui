@@ -5,6 +5,8 @@ export const determineType = (value) => {
         } else if (typeof value[0] === 'number') {
         return "int[]";
         }
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        return "component";
     } else if (typeof value === 'string') {
         if (value.startsWith('$(') && value.endsWith(')')) {
         return "expression";
@@ -120,7 +122,7 @@ export const createFormDataNode = (event) => {
                     else formData[element.name] = element.value;
                     break;
                 default:
-                    if(element.getAttribute('data-parent')){
+                    if(element.getAttribute('data-parent') && element.getAttribute('data-parent')!=="nokey"){
                         if (!formData[element.getAttribute('data-parent')]) {
                             formData[element.getAttribute('data-parent')] = {};
                         }
@@ -148,4 +150,20 @@ const arrayFormData = (element, formData, value) => {
     }
     
     return formData;
+};
+
+export const changeType = (value) => {
+    if (value === "true") {
+        return true;
+    } else if (value === "false") {
+        return false;
+    }
+    
+    const number = Number(value);
+    
+    if (!isNaN(number) && value !== '') {
+        return number;
+    }
+
+    return value;
 };

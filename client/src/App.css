@@ -100,7 +100,7 @@ input[type=number]{-moz-appearance:textfield}
 .node-base.type-output .node-header{border-bottom: 1px solid #adcf06;background: linear-gradient(90deg,#ac910059 0,rgba(121, 103, 9, 0.14) 100%);}
 .node-base.type-argument .node-header{border-bottom:1px solid #6b009c;background:linear-gradient(90deg,#870fff59 0,rgba(135,15,255,.04) 100%)}
 .node-base.type-step .node-header{border-bottom:1px solid #00b22d;background:linear-gradient(90deg,#00b91ca3 0,rgba(15, 255, 59, 0.04) 100%)}
-.node-base.type-basecommand .node-header{border-bottom:1px solid #6b0091;background:linear-gradient(90deg,#df00ff59 0,rgba(121,9,109,.14) 100%)}
+.node-base.type-basecommand .node-header{border-bottom:1px solid #910000;background:linear-gradient(90deg,#ff000059 0,rgba(121,9,9,.14) 100%)}
 .node-base .node-content{padding:5px}
 .node-base .node-content p{margin:0;font-size:9px;color:#c5c5c5;margin-bottom: 2px;}
 .node-base .node-content p span{font-weight:700}

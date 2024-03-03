@@ -11,6 +11,7 @@ import ArrayComponentElement from './elements/ArrayComponentElement';
 * RenderElement: decides which element component to render based on the type of the element passed as a prop
 */
 function RenderElement({ parent='', position, name, element, currentType = '', currentValue = '', index = ''}) {  
+  console.log(currentValue);
   var component;
   var type = element.type[0] !== undefined ? element.type[0].replace("?","") : element.type[0];
   if(type === "component") {

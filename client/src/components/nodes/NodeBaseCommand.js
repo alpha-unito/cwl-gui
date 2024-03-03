@@ -14,7 +14,7 @@ function NodeBaseCommand({ data }) {
           baseCommand
         </div>
         <div className='node-content'>
-          <p>{data.value.join(', ')}</p>
+          <p>{Array.isArray(data.value) ? data.value.join(', ') : data.value}</p>
         </div>
         <Handle type="source" position={Position.Bottom}/>
     </div>

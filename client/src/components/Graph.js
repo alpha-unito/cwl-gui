@@ -7,7 +7,7 @@ import NodeArgument from './nodes/NodeArgument.js';
 import NodeBaseCommand from './nodes/NodeBaseCommand.js';
 import NodeStep from './nodes/NodeStep.js';
 import { useSelector, useDispatch  } from 'react-redux';
-
+ 
 const nodeTypes = { 
   nodeInput: NodeInput, 
   nodeOutput: NodeOutput, 

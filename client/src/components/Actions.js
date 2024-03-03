@@ -3,11 +3,12 @@ import { useSelector, useDispatch  } from 'react-redux';
 import {cltInputs} from './../data/commandLineToolInputs';
 import {cltOutputs} from './../data/commandLineToolOutputs';
 import {cltBaseCommand} from './../data/commandLineToolBaseCommand';
+import {cltArgument} from './../data/commandLineToolArgument';
 import {workflowInputs} from './../data/workflowInputs';
 import {workflowOutputs} from './../data/workflowOutputs';
 import {workflowSteps} from './../data/workflowSteps';
 import {renderNode} from './../helpers/graphHelpers';
-import {createFormDataNode} from './../helpers/formHelpers';
+import {createFormDataNode, changeType} from './../helpers/formHelpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import cloneDeep from 'lodash/cloneDeep';
@@ -22,7 +23,6 @@ function Actions({ className }) {
 
   // Creating a deep clone of the cwl object to avoid directly mutating the state
   var cwltemp = cloneDeep(cwl.cwlobject);  
-  
   // Extracting type and index from the activeNode identifier
   const type = cwl.activeNode !== "" ? cwl.activeNode.split("_")[0] : undefined;
   const index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
@@ -43,6 +43,7 @@ function Actions({ className }) {
         inputs = cltInputs;
         outputs = cltOutputs;
         baseCommand = cltBaseCommand;
+        arguments_ = cltArgument;
         break;
       case "Workflow":
         inputs = workflowInputs;
@@ -80,15 +81,22 @@ function Actions({ className }) {
     formData = createFormDataNode(event);
   
     // Updating the cwltemp object with form data
+    var indextemp = index;        
+    if(type === "argument") { indextemp = indextemp - 1; }
     Object.keys(formData).forEach(key => {
       if(key !== "nodeType" && key !== "nodePosition"){
-        if(type === "baseCommand") {
-          if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
-            cwltemp[key] = formData[key];
-          else delete cwltemp[key]; 
-        }else if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
-          cwltemp[type+"s"][index][key] = formData[key];
-        else delete cwltemp[type+"s"][index][key];        
+        switch (type) {
+          case "baseCommand":
+            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+              cwltemp[key] = changeType(formData[key]);
+            else delete cwltemp[key]; 
+            break;
+          default:
+            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+              cwltemp[type+"s"][indextemp][key] = changeType(formData[key]);
+            else delete cwltemp[type+"s"][indextemp][key];
+
+        }     
       }
     });
 
