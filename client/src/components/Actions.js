@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch  } from 'react-redux';
 import {cltInputs} from './../data/commandLineToolInputs';
 import {cltOutputs} from './../data/commandLineToolOutputs';
+import {cltBaseCommand} from './../data/commandLineToolBaseCommand';
 import {workflowInputs} from './../data/workflowInputs';
 import {workflowOutputs} from './../data/workflowOutputs';
 import {workflowSteps} from './../data/workflowSteps';
@@ -33,6 +34,7 @@ function Actions({ className }) {
   if(type !== undefined && index !== undefined) {
     var inputs = {};
     var outputs = {};
+    var baseCommand = {};
     var steps = {};
     var arguments_ = {};
 
@@ -40,6 +42,7 @@ function Actions({ className }) {
       case "CommandLineTool":
         inputs = cltInputs;
         outputs = cltOutputs;
+        baseCommand = cltBaseCommand;
         break;
       case "Workflow":
         inputs = workflowInputs;
@@ -50,6 +53,9 @@ function Actions({ className }) {
     }
 
     switch (type) {
+      case "baseCommand":
+        render = renderNode(cwl.cwlobject, baseCommand);
+        break;
       case "step":
         let stepsArray = [...cwl.cwlobject.steps].reverse();
         render = renderNode(stepsArray[index], steps);
@@ -76,7 +82,11 @@ function Actions({ className }) {
     // Updating the cwltemp object with form data
     Object.keys(formData).forEach(key => {
       if(key !== "nodeType" && key !== "nodePosition"){
-        if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+        if(type === "baseCommand") {
+          if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+            cwltemp[key] = formData[key];
+          else delete cwltemp[key]; 
+        }else if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
           cwltemp[type+"s"][index][key] = formData[key];
         else delete cwltemp[type+"s"][index][key];        
       }

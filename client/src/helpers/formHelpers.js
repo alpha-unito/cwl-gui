@@ -72,6 +72,7 @@ export const createFormDataNode = (event) => {
                 case "doc":
                 case "scatter":
                 case "format":
+                case "baseCommand":
                 case "out":
                     formData = arrayFormData(element, formData, element.value);
                     break;

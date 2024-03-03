@@ -21,7 +21,7 @@ function Content({ className }) {
         <span><FontAwesomeIcon icon={faCircle} color="#870fff59" /> Arguments</span>
         <span><FontAwesomeIcon icon={faCircle} color="#00b91ca3" /> Steps</span>
         <span><FontAwesomeIcon icon={faCircle} color="#ac910059" /> Outputs</span>
-        <span><FontAwesomeIcon icon={faCircle} color="#0c0c9d59" /> BaseCommand</span>
+        <span><FontAwesomeIcon icon={faCircle} color="#df00ff59" /> BaseCommand</span>
       </div>
       <FontAwesomeIcon icon={faCircleInfo} />
     </div>

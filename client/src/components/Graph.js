@@ -1,13 +1,20 @@
 import { useCallback, useState, useEffect } from 'react';
-import ReactFlow, { addEdge, applyEdgeChanges, applyNodeChanges, Controls, MarkerType } from 'reactflow';
+import ReactFlow, { applyEdgeChanges, applyNodeChanges, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 import NodeInput from './nodes/NodeInput.js';
 import NodeOutput from './nodes/NodeOutput.js';
 import NodeArgument from './nodes/NodeArgument.js';
+import NodeBaseCommand from './nodes/NodeBaseCommand.js';
 import NodeStep from './nodes/NodeStep.js';
 import { useSelector, useDispatch  } from 'react-redux';
 
-const nodeTypes = { nodeInput: NodeInput, nodeOutput: NodeOutput, nodeArgument: NodeArgument, nodeStep: NodeStep };
+const nodeTypes = { 
+  nodeInput: NodeInput, 
+  nodeOutput: NodeOutput, 
+  nodeArgument: NodeArgument, 
+  nodeStep: NodeStep, 
+  nodeBaseCommand: NodeBaseCommand 
+};
 
 
 /**
@@ -51,19 +58,16 @@ function Graph({initialNodes, initialEdges}) {
     [setEdges]
   );
   
-  const onConnect = useCallback(
-    (connection) => {
-      /*const newEdge = {
-        ...connection,
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-        },
-      };
-      setEdges((eds) => addEdge(newEdge, eds));*/
-      console.log("Adding new connections is not allowed.");
-    },
-    [setEdges]
-  );
+  const onConnect = (connection) => {
+    /*const newEdge = {
+      ...connection,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+      },
+    };
+    setEdges((eds) => addEdge(newEdge, eds));*/
+    console.log("Adding new connections is not allowed.");
+  };
 
   const onEdgeClick = (event, edge) => {
     let newEdges=null;
