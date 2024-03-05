@@ -115,7 +115,7 @@ function Uploader({ className }) {
             <p>Select the cwl type</p>
             <button type="button" onClick={() => setCwl("CommandLineTool")}>CommandLineTool</button>
             <button type="button" onClick={() => setCwl("Workflow")}>Workflow</button>
-            <button type="button" className='return' onClick={toggleNewFile}>Torna indietro</button>
+            <button type="button" className='return' onClick={toggleNewFile}>Come back</button>
           </div>
         </div>
       }

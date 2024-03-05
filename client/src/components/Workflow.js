@@ -70,7 +70,7 @@ const parseCWLObject = (object, savedPositions) => {
       sources.forEach(source => {
         if (source !== undefined) {
           let sourceId = source;
-          var i = idCwl !== "" && sourceId.split("/")[0] == idCwl ? 1 : 0;
+          var i = idCwl !== "" && sourceId.split("/")[0] === idCwl ? 1 : 0;
           sourceId = sourceId.includes("/") ? sourceId.split("/")[i] : sourceId;
           const level = allNodes[sourceId] + 1;
           levels.push(level);

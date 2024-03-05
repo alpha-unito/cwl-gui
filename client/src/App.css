@@ -124,6 +124,11 @@ input[type=number]{-moz-appearance:textfield}
 .app .actions .element-component{padding:10px 20px;border:1px solid var(--border);border-radius:4px}
 .app .actions button.update{width:calc(100% - 40px);background:var(--secondary);z-index: 9;border:1px solid var(--font);border-radius:3px;color:var(--font);cursor:pointer;padding:5px 0;position:absolute;bottom:8px;left:20px}
 .app .actions button.update.disable{opacity: 1;color: #d7d7d763;border-color: #d7d7d763;}  
+.app .actions .deleteNode button{margin-bottom:10px;margin-right:10px;min-width:100px;background:0 0;border:1px solid var(--font);border-radius:3px;color:var(--font);padding:2px 11px;cursor:pointer}
+.app .actions .deleteNode{text-align:right}
+.app .actions .deleteNode button{margin:0;padding:3px 0;color:#c90000;border:1px solid;background:0 0;border-radius:3px;}
+.app .actions .deleteNode p{margin:0}
+.app .actions .deleteNode{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #fff;padding-bottom:14px;margin-bottom:20px}
 
 /* EXCEPTION */
 .app .exception .main{width:50%;margin:0 auto;position: relative;height:50vh;padding:20px;padding-top: 0;background:var(--primary);margin-top:25vh;border:1px solid var(--border)}
@@ -134,4 +139,4 @@ input[type=number]{-moz-appearance:textfield}
 
 /* MODAL INLINE */
 .app .modal-inline{width:50%;position:absolute;background:var(--primary);padding:9px 0;text-align:right;top:0;right:5px}
-.app .modal-inline button{margin-left:5px;width:50px}
+.app .modal-inline button{margin-left:5px;width:50px} 

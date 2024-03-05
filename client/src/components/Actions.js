@@ -10,7 +10,7 @@ import {workflowSteps} from './../data/workflowSteps';
 import {renderNode} from './../helpers/graphHelpers';
 import {createFormDataNode, changeType} from './../helpers/formHelpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faTrash } from '@fortawesome/free-solid-svg-icons';
 import cloneDeep from 'lodash/cloneDeep';
 
 /**
@@ -137,14 +137,82 @@ function Actions({ className }) {
       });
     };
 
+  function deleteNode() {
+      let updatedCwlObject = {...cwltemp};
+  
+      switch (type) {
+        case "baseCommand":
+          delete updatedCwlObject.baseCommand;
+          break;
+        case "step":
+          updatedCwlObject.steps.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          break;
+        case "output":
+          updatedCwlObject.outputs.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          break;
+        case "input":
+          updatedCwlObject.inputs.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          break;
+        case "argument":
+          updatedCwlObject.arguments.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          break;
+        default:
+          // Gestisci il caso default se necessario
+      }
+  
+      fetch(`${APP_SERVER_URL}api/node`, {
+          method: 'POST',
+          body: JSON.stringify({ content: updatedCwlObject }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data.result) {
+            dispatch({ 
+              type: 'set', 
+              value: { 
+                data: data.string,
+                cwlobject: updatedCwlObject,
+                nodeModified: false,
+                activeNode: "",
+              } 
+            });        
+          } else {
+            dispatch({ 
+              type: 'set', 
+              value: { 
+                errorEnabled: data.message,
+              } 
+            });  
+          }
+        })
+        .catch(error => {
+          console.error("Errore nell'eliminazione del nodo:", error);
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorEnabled: error.toString(),
+            } 
+          }); 
+        });
+  }
+  
+
   return (
   <div className={className}>
+    
     <form onSubmit={saveNode}>
-      {cwl.activeNode !== "" &&
+      {cwl.activeNode !== "" && <>
+      <div className="deleteNode">
+        <p><strong>{type}</strong></p>
+        <button type="button"  onClick={deleteNode}><FontAwesomeIcon icon={faTrash} /> Delete node</button>
+      </div>
       <button 
         className={`update button ${!cwl.nodeModified ? 'disable' : ''}`}>
         <FontAwesomeIcon icon={faArrowsRotate} /> Update Node
-      </button> }
+      </button></> }
       {render}
       <input type="hidden" name="nodeType" value={type}/>
       <input type="hidden" name="nodePosition" value={index}/>
