@@ -26,9 +26,9 @@ function Summary({ className }) {
   const elements = (cwl.cwlobject.class === "Workflow") ? workflow : commandLineTool;  
 
   const elementsRender = Object.keys(elements).map(key => {
-    let currentValue = cwl.cwlobject[key];
+    let currentValue = cwl.cwlobject[key] ? cwl.cwlobject[key] : undefined;
     
-    if(key === "id") {
+    if(key === "id" && currentValue !== undefined) {
       currentValue = currentValue.split("#")[1] !== undefined ? currentValue.split("#")[1] : "";
     }
 
@@ -99,7 +99,7 @@ function Summary({ className }) {
 
     const cwltemp = cloneDeep(cwl.cwlobject);   
     if(cwltemp.steps){ 
-      var idCwl = cwltemp.id.split("#")[1] ? cwltemp.id.split("#")[1] : "";
+      var idCwl = cwltemp.id && cwltemp.id.split("#")[1] ? cwltemp.id.split("#")[1] : "";
       cwltemp.steps = cwltemp.steps.map(step => {
         if(idCwl !== "" && (formData["id"] === null || formData["id"] === undefined || formData["id"] === '')) {
           step.in = step.in.map(input => {

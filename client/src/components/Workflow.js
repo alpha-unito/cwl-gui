@@ -114,13 +114,13 @@ const parseCWLObject = (object, savedPositions) => {
   };
 
   // Main processing flow
-  processInputs(object.inputs);
+  if(object.inputs) processInputs(object.inputs);
   //if(object.arguments) processArguments(object.arguments, Object.keys(object.inputs).length);
-  var idCwl = object.id.split("#")[1] ? object.id.split("#")[1] : "";
-  processSteps(object.steps, idCwl);
-  processStepOutputs(object.outputs, object.steps, initialEdges, allNodes); // Link step nodes to output nodes
+  var idCwl = object.id && object.id.split("#")[1] ? object.id.split("#")[1] : "";
+  if(object.steps) processSteps(object.steps, idCwl);
+  if(object.steps && object.outputs) processStepOutputs(object.outputs, object.steps, initialEdges, allNodes); // Link step nodes to output nodes
   const lastLine = Math.max(...Object.values(allNodes)) + 1; // Determine the last line for output positioning
-  processOutputs(object.outputs, lastLine);
+  if(object.outputs) processOutputs(object.outputs, lastLine);
 
   return { initialNodes, initialEdges };
 

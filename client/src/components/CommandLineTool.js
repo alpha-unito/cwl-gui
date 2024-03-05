@@ -29,20 +29,23 @@ function CommandLineTool() {
   };
 
   // Process inputs to create input nodes
-  object.inputs.forEach((input, index) => {
-    const label = input.id || "input_"+index;
-    const prefix = input.inputBinding ? input.inputBinding.prefix : "";
-    initialNodes.push(createNode(label, index, 'nodeInput', 0, {typeNode: "input", type: input.type, prefix: prefix }));
-    currentIndex++;
-    if(object.baseCommand) {
-      initialEdges.push({
-        id: `${label}->baseCommand`,
-        markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
-        source: label,
-        target: "baseCommand",
-      });
-    }
-  });
+  if(object.inputs) {
+    object.inputs.forEach((input, index) => {
+      const label = input.id || "input_"+index;
+      const prefix = input.inputBinding ? input.inputBinding.prefix : "";
+      initialNodes.push(createNode(label, index, 'nodeInput', 0, {typeNode: "input", type: input.type, prefix: prefix }));
+      currentIndex++;
+      if(object.baseCommand) {
+        initialEdges.push({
+          id: `${label}->baseCommand`,
+          markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
+          source: label,
+          target: "baseCommand",
+        });
+      }
+    });    
+  }
+
 
   // Process arguments, if any, to create argument nodes
   if(object.arguments) {
@@ -69,18 +72,21 @@ function CommandLineTool() {
   }
 
   // Process outputs to create output nodes
-  object.outputs.forEach((output, index) => {
-    const label = output.id || "output_"+index;
-    initialNodes.push(createNode(label, index, 'nodeOutput', indexBaseCommand+150, {typeNode: "output", type: output.type}));
-    if(object.baseCommand) {
-      initialEdges.push({
-        id: `baseCommand->${label}`,
-        markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
-        source: "baseCommand",
-        target: label,
-      });
-    }
-  });
+  if(object.outputs){
+    object.outputs.forEach((output, index) => {
+      const label = output.id || "output_"+index;
+      initialNodes.push(createNode(label, index, 'nodeOutput', indexBaseCommand+150, {typeNode: "output", type: output.type}));
+      if(object.baseCommand) {
+        initialEdges.push({
+          id: `baseCommand->${label}`,
+          markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
+          source: "baseCommand",
+          target: label,
+        });
+      }
+    });    
+  }
+
 
   return <Graph initialNodes={initialNodes} initialEdges={initialEdges} />;
 }

@@ -13,6 +13,38 @@ function Uploader({ className }) {
   const APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
   const dispatch = useDispatch();
   const [fileData, setFileData] = useState(null);
+  const [newfile, setNewFile] = useState(false);
+
+  function setCwl (type) { 
+    var cwlobject = {}; 
+    var data = "";
+
+    switch(type) {
+      case "CommandLineTool": 
+        cwlobject = { cwlVersion: "v1.2", class: type, inputs: [], outputs: [] };
+        data = "cwlVersion: v1.2\nclass: "+type+"\ninputs: [] \noutputs: []\n";
+        break;
+      case "Workflow":
+        cwlobject = { cwlVersion: "v1.2", class: type, inputs: [], steps: [], outputs: [] };
+        data = "cwlVersion: v1.2\nclass: "+type+"\ninputs: [] \nsteps: [] \noutputs: []\n";
+        break;
+      default:
+        break;
+    }
+
+    dispatch({ 
+      type: 'set', 
+      value: { 
+        name: "unnamed.cwl", 
+        data: data, 
+        cwlobject: cwlobject,
+      } 
+    }); 
+  };
+
+  function toggleNewFile () {
+      setNewFile(!newfile); 
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -76,7 +108,17 @@ function Uploader({ className }) {
           <label>Drag and Drop your file</label>            
         </div>
       </div>
-      <p>Or create a <button type="button">New file cwl</button></p>
+      <p>Or create a <button type="button" onClick={toggleNewFile}>New file cwl</button></p>
+      {newfile && 
+        <div className="newfile">
+          <div className="newfile-content">
+            <p>Select the cwl type</p>
+            <button type="button" onClick={() => setCwl("CommandLineTool")}>CommandLineTool</button>
+            <button type="button" onClick={() => setCwl("Workflow")}>Workflow</button>
+            <button type="button" className='return' onClick={toggleNewFile}>Torna indietro</button>
+          </div>
+        </div>
+      }
     </div>
   );
 }
