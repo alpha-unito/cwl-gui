@@ -12,9 +12,9 @@ function CommandLineTool() {
   let currentIndex = 0; // Index to track the position of nodes horizontally
 
   // Helper function to create a node
-  const createNode = (id, index, type, positionY, data, fixed = false) => {
-    var defaultPosition = { x: index * 160, y: positionY };
-    if(fixed) defaultPosition = {...defaultPosition, x: index};
+  const createNode = (id, index, type, positionY, data, fixed = false, offset = 0) => {
+    var defaultPosition = { x: (index+offset) * 160, y: positionY };
+    if(fixed) defaultPosition = {...defaultPosition, x: (index+offset)};
     const position = savedPositions[data.typeNode+"_"+index] ? { x: savedPositions[data.typeNode+"_"+index].x, y: savedPositions[data.typeNode+"_"+index].y } : defaultPosition;
     return {
       id: id,
@@ -50,10 +50,10 @@ function CommandLineTool() {
   // Process arguments, if any, to create argument nodes
   if(object.arguments) {
     object.arguments.forEach((argument, index) => {
-      const label = argument.valueFrom !== "" ? argument.valueFrom : "argument_"+index;
+      const label = argument.valueFrom !== undefined ? argument.valueFrom : "argument_"+index;
       const prefix = argument.prefix || "";
       const position = argument.position || "";
-      initialNodes.push(createNode(label, currentIndex++, 'nodeArgument', 0, {typeNode: "argument", prefix: prefix, position: position}));
+      initialNodes.push(createNode(label, index, 'nodeArgument', 0, {typeNode: "argument", prefix: prefix, position: position}, false, currentIndex));
       if(object.baseCommand) {
         initialEdges.push({
           id: `${label}->baseCommand`,
@@ -68,7 +68,7 @@ function CommandLineTool() {
   var indexBaseCommand = 0;
   if(object.baseCommand) {
     indexBaseCommand = 150;
-    initialNodes.push(createNode("baseCommand", currentIndex*160/2-80, 'nodeBaseCommand', indexBaseCommand, {typeNode: "baseCommand", value: object.baseCommand}, true));
+    initialNodes.push(createNode("baseCommand", (object.inputs.length+object.arguments.length)*160/2-80, 'nodeBaseCommand', indexBaseCommand, {typeNode: "baseCommand", value: object.baseCommand}, true));
   }
 
   // Process outputs to create output nodes

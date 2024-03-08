@@ -11,7 +11,6 @@ import ArrayComponentElement from './elements/ArrayComponentElement';
 * RenderElement: decides which element component to render based on the type of the element passed as a prop
 */
 function RenderElement({ parent='', position, name, element, currentType = '', currentValue = '', index = ''}) {  
-  console.log(currentValue);
   var component;
   var type = element.type[0] !== undefined ? element.type[0].replace("?","") : element.type[0];
   if(type === "component") {
@@ -21,6 +20,7 @@ function RenderElement({ parent='', position, name, element, currentType = '', c
     component = Array.isArray(element.component) && element.component.length > 1 ? element.component[0] : element.component;
     return <ArrayComponentElement index={index} parent={name} position={position} name={name} element={component} currentValue = {currentValue}/>;
   }else if(Array.isArray(element.type) && element.type.length > 1) {
+    currentValue = currentValue === undefined ? '' : currentValue
     currentType = determineType(currentValue);
     return <CompoundElement index={index} parent={parent} position={position} currentType={currentType} currentValue = {currentValue} name={name} element={element} />;
   }else{

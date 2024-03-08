@@ -25,7 +25,7 @@ function Actions({ className }) {
   var cwltemp = cloneDeep(cwl.cwlobject);  
   // Extracting type and index from the activeNode identifier
   const type = cwl.activeNode !== "" ? cwl.activeNode.split("_")[0] : undefined;
-  const index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
+  var index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
 
   const dispatch = useDispatch();
   const APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -55,20 +55,56 @@ function Actions({ className }) {
 
     switch (type) {
       case "baseCommand":
-        render = renderNode(cwl.cwlobject, baseCommand);
+        render = renderNode(cwltemp, baseCommand);
         break;
       case "step":
-        let stepsArray = [...cwl.cwlobject.steps].reverse();
+        if(cwltemp.steps === undefined){
+          cwltemp.steps = [];
+          index = 0;
+          cwltemp.steps[index] = {run: ""};
+        }
+        if(index === "new"){
+          index = cwltemp.steps.length;
+          cwltemp.steps[index] = {run: ""};
+        }
+        let stepsArray = [...cwltemp.steps].reverse();
         render = renderNode(stepsArray[index], steps);
         break;
       case "output":
-        render = renderNode(cwl.cwlobject.outputs[index], outputs);
+        if(cwltemp.outputs === undefined){
+          cwltemp.outputs = [];
+          index = 0;
+          cwltemp.outputs[index] = {type: "File"};
+        }
+        if(index === "new"){
+          index = cwltemp.outputs.length;
+          cwltemp.outputs[index] = {type: "File"};
+        }
+        render = renderNode(cwltemp.outputs[index], outputs);
         break;
       case "input":
-        render = renderNode(cwl.cwlobject.inputs[index], inputs);
+        if(cwltemp.inputs === undefined){
+          cwltemp.inputs = [];
+          index = 0;
+          cwltemp.inputs[index] = {type: "File"};
+        }
+        if(index === "new"){
+          index = cwltemp.inputs.length;
+          cwltemp.inputs[index] = {type: "File"};
+        }
+        render = renderNode(cwltemp.inputs[index], inputs);
         break;
       case "argument":
-        render = renderNode(cwl.cwlobject.arguments[index-1], arguments_);
+        if(cwltemp.arguments === undefined){
+          cwltemp.arguments = [];
+          index = 0;
+          cwltemp.arguments[index] = {};
+        }
+        if(index === "new"){
+          index = cwltemp.arguments.length;
+          cwltemp.arguments[index] = {};
+        }
+        render = renderNode(cwltemp.arguments[index], arguments_);
         break; 
       default:
     }
@@ -76,13 +112,19 @@ function Actions({ className }) {
 
   const saveNode = (event) => {
     event.preventDefault();
+    dispatch({ 
+      type: 'set', 
+      value: { 
+        activeNode: type+"_"+index,
+      } 
+    }); 
 
     var formData = {};
     formData = createFormDataNode(event);
   
     // Updating the cwltemp object with form data
     var indextemp = index;        
-    if(type === "argument") { indextemp = indextemp - 1; }
+    //if(type === "argument") { indextemp = indextemp - 1; }
     Object.keys(formData).forEach(key => {
       if(key !== "nodeType" && key !== "nodePosition"){
         switch (type) {
@@ -145,19 +187,18 @@ function Actions({ className }) {
           delete updatedCwlObject.baseCommand;
           break;
         case "step":
-          updatedCwlObject.steps.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          updatedCwlObject.steps.splice(index, 1);
           break;
         case "output":
-          updatedCwlObject.outputs.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          updatedCwlObject.outputs.splice(index, 1);
           break;
         case "input":
-          updatedCwlObject.inputs.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          updatedCwlObject.inputs.splice(index, 1);
           break;
         case "argument":
-          updatedCwlObject.arguments.splice(index, 1); // Rimuove l'elemento all'indice specificato
+          updatedCwlObject.arguments.splice(index, 1);
           break;
         default:
-          // Gestisci il caso default se necessario
       }
   
       fetch(`${APP_SERVER_URL}api/node`, {
@@ -202,7 +243,6 @@ function Actions({ className }) {
 
   return (
   <div className={className}>
-    
     <form onSubmit={saveNode}>
       {cwl.activeNode !== "" && <>
       <div className="deleteNode">

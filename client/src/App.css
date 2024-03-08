@@ -116,6 +116,10 @@ input[type=number]{-moz-appearance:textfield}
 .legend-content{border:1px solid var(--border);padding:10px;margin-bottom:5px;border-radius:5px;background: var(--secondary);}
 .legend .legend-content{display:none}
 .legend:hover .legend-content{display:block}
+.app .content .select-button{width:100%;background: var(--primary);padding:8px 18px;background:0 0;cursor: pointer;border:1px solid var(--font);color:var(--font);border-radius:2px}
+.app .content .other-button button{width:100%;background:#272822;border:1px solid var(--font);padding:7px 0;color:var(--fa-font-brands);cursor:pointer;margin-top:-1px}
+.app .content .select-type-node{text-align:right;position:absolute;right:0;z-index:9999;min-width:63px;margin-top:20px;margin-right:20px;width:150px}
+.app .content .other-button button:hover{background:#191a14}
 
 
 /* SIDEBAR ACTIONS */

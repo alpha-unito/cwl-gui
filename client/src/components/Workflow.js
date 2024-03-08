@@ -94,22 +94,27 @@ const parseCWLObject = (object, savedPositions) => {
   const processStepOutputs = (outputs, steps, initialEdges, allNodes) => {
     outputs.forEach((output, index) => {
       let sourceIds = Array.isArray(output.outputSource) ? output.outputSource : [output.outputSource];
-      sourceIds.forEach(sourceId => {
-        sourceId = sourceId.includes("/") ? sourceId.split("/")[0] : sourceId;
-        const targetId = output.id;
-        if (sourceId && allNodes[sourceId] !== undefined) {
-          const edgeId = `${sourceId}->${targetId}`;
-          const existingEdge = initialEdges.find(edge => edge.id === edgeId);
-          if (!existingEdge) {
-            initialEdges.push({
-              id: edgeId,
-              markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
-              source: sourceId,
-              target: targetId,
-            });
+      if(sourceIds !== undefined && Array.isArray(sourceIds) && sourceIds.length > 0){
+        sourceIds.forEach(sourceId => {
+          if(sourceId !== undefined) {
+            sourceId = sourceId.includes("/") ? sourceId.split("/")[0] : sourceId;
+            const targetId = output.id;
+            if (sourceId && allNodes[sourceId] !== undefined) {
+              const edgeId = `${sourceId}->${targetId}`;
+              const existingEdge = initialEdges.find(edge => edge.id === edgeId);
+              if (!existingEdge) {
+                initialEdges.push({
+                  id: edgeId,
+                  markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20 },
+                  source: sourceId,
+                  target: targetId,
+                });
+              }
+            }            
           }
-        }
-      });
+        });        
+      }
+
     });
   };
 
@@ -119,7 +124,8 @@ const parseCWLObject = (object, savedPositions) => {
   var idCwl = object.id && object.id.split("#")[1] ? object.id.split("#")[1] : "";
   if(object.steps) processSteps(object.steps, idCwl);
   if(object.steps && object.outputs) processStepOutputs(object.outputs, object.steps, initialEdges, allNodes); // Link step nodes to output nodes
-  const lastLine = Math.max(...Object.values(allNodes)) + 1; // Determine the last line for output positioning
+  var lastLine = Math.max(...Object.values(allNodes)) + 1; // Determine the last line for output positioning
+  lastLine = lastLine === -Infinity ? 0 : lastLine;
   if(object.outputs) processOutputs(object.outputs, lastLine);
 
   return { initialNodes, initialEdges };
