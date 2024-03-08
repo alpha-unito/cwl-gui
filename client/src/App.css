@@ -54,11 +54,13 @@ input[type=number]{-moz-appearance:textfield}
 .toolbar{margin:0;border-bottom:1px solid var(--border);padding:10px 20px;width:100%;height:20px;display:flex}
 .toolbar{margin:0;border-bottom:1px solid var(--border);padding:10px 20px;width:100%;min-height:10px;height: 20px;justify-content: space-between;}
 .toolbar p{margin:0;display: inline-block;}
-.toolbar .info p span{font-weight:800;color:var(--font-hover)}
+.toolbar .info p span{font-weight:800;color:var(--font-hover);margin-left: 5px;}
 .toolbar .info button{margin-right:10px;min-width:100px;background:0 0;border:1px solid var(--font);border-radius:3px;color:var(--font);padding:2px 11px;cursor: pointer;}
 .toolbar .info p{margin-right:15px;font-size:13px}
 .toolbar>p span{font-size:10px}
 .button.disable{opacity:.5;pointer-events:none}
+.toolbar .info p span input{width:max-content;background:0 0;border:1px solid #fff;text-align:center;color:#fff;border-radius:3px;padding:2px 5px}
+.toolbar .info p span input:focus{outline: none;}
 
 /* SUMMARY */
 .app .summary .name{text-align:center;font-size:18px;font-weight:600}

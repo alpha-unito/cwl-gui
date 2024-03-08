@@ -1,5 +1,5 @@
 import { useSelector,useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFloppyDisk, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import ConfirmModal from './ConfirmModal';
@@ -8,9 +8,12 @@ import ConfirmModal from './ConfirmModal';
  * Toolbar: Renders a toolbar component with buttons for file manipulation.
  */
 function Toolbar({ className }) {
-  const APP_VERSION = process.env.REACT_APP_VERSION;
-  const [showModal, setShowModal] = useState(false);
+  const APP_VERSION = process.env.REACT_APP_VERSION;  
   const cwl = useSelector((state) => state.cwl_data);
+  const [showModal, setShowModal] = useState(false);
+  const [editTitle, setTitle] = useState(false);
+  const inputRef = useRef(null);
+
   const dispatch = useDispatch();
   
   const handleOpenModal = () => {
@@ -25,6 +28,41 @@ function Toolbar({ className }) {
   const handleCancel = () => {
     setShowModal(false);
   };
+
+  const enableEdit = () => {
+    setTitle(true);
+
+  };
+
+  useEffect(() => {
+    if(editTitle && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editTitle, inputRef]);
+
+  const handleChange = (e) => {
+    if(e.target.value === "") {
+      return;
+    }
+    dispatch({ 
+      type: 'set', 
+      value: { 
+        name: e.target.value+".cwl"
+      } 
+    });
+  };
+
+  const handleBlur = () => {
+    setTitle(false);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleBlur();
+      event.preventDefault();
+    }
+  };
+  
 
   const saveState = () => {
     const blob = new Blob([cwl.data], { type: 'text/yaml;charset=utf-8' });
@@ -42,7 +80,10 @@ function Toolbar({ className }) {
     <div className={className}>
       <p>cwl-gui <span>v{APP_VERSION}</span></p>
       <div className="info">
-        <p className="file">You are editing <span>{cwl.name}</span></p>
+        <p className="file" onClick={enableEdit}>You are editing 
+          {!editTitle && <span>{cwl.name}</span>}
+          {editTitle && <span><input ref={inputRef} onKeyDown={handleKeyDown} onChange={handleChange} onBlur={handleBlur} type="text" value={cwl.name.split(".")[0]}/>.cwl</span>}
+        </p>
         <button type="button" className='button' onClick={handleOpenModal}><FontAwesomeIcon icon={faFolderOpen} /> Change file</button>
         <button type="button" className='button' onClick={saveState}><FontAwesomeIcon icon={faFloppyDisk} /> Export</button>
       </div>
