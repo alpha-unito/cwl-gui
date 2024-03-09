@@ -130,7 +130,7 @@ export const createFormDataNode = (event) => {
                     }
                     else formData[element.name] = element.value;
             }
-        }
+        }else formData[element.name] = undefined;
     });
 
     return formData;

@@ -130,23 +130,22 @@ function Actions({ className }) {
   
     // Updating the cwltemp object with form data
     var indextemp = index;        
-    //if(type === "argument") { indextemp = indextemp - 1; }
     Object.keys(formData).forEach(key => {
       if(key !== "nodeType" && key !== "nodePosition"){
         switch (type) {
           case "baseCommand":
-            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+            if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
               cwltemp[key] = changeType(formData[key]);
             else delete cwltemp[key]; 
             break;
           case "step":
             let correctIndex = cwltemp.steps.length - 1 - indextemp;
-            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+            if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
               cwltemp[type+"s"][correctIndex][key] = changeType(formData[key]);
             else delete cwltemp[type+"s"][correctIndex][key]; 
             break;
           default:
-            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+            if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
               cwltemp[type+"s"][indextemp][key] = changeType(formData[key]);
             else delete cwltemp[type+"s"][indextemp][key];
 
