@@ -111,6 +111,12 @@ function Actions({ className }) {
   }
 
   const saveNode = (event) => {
+    if(cwl.errorElementsNode.length > 0) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     event.preventDefault();
     dispatch({ 
       type: 'set', 

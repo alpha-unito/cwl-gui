@@ -92,6 +92,13 @@ function Summary({ className }) {
   };
 
   const saveGeneral = (event) => {
+
+    if(cwl.errorElementsGeneral.length > 0) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     event.preventDefault();
 
     var formData = {};

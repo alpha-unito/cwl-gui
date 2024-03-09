@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch  } from 'react-redux';
 
 /*
@@ -9,25 +9,46 @@ function BaseElement({ parent='', position, name, type, required = false, readOn
     const [isValid, setIsValid] = useState(new RegExp(regex).test(currentValue) || (!required && currentValue === '')); 
     const dispatch = useDispatch();
 
+
+    const errorUpdate = useCallback(() => {
+        var modified;
+        var typeDisp;
+        if(isValid){
+            modified = { ...(position === 'node' ? { nodeModified: true } : { generalModified: true }) };
+            dispatch({
+                type: "set", 
+                value: { ...modified }
+            });
+        }
+        if (isValid) {
+            typeDisp = position === 'node' ? 'removeErrorNode' : 'removeErrorGeneral';
+            modified = { key: name };
+        } else {
+            typeDisp = position === 'node' ? 'addErrorNode' : 'addErrorGeneral';
+            modified = { key: name };
+        }
+        dispatch({
+            type: typeDisp, 
+            value: { ...modified }
+        });
+    }, [isValid, name, position, dispatch]);
+    
+
+    useEffect(() => {
+        errorUpdate();
+    }, [errorUpdate]);
+
     useEffect(() => {
         setInputValue(currentValue);
     }, [currentValue]);
-
+    
     const handleChange = (event) => {
         if (readOnly) return; 
 
         const newValue = event.target.value;
         setInputValue(newValue);
         setIsValid(new RegExp(regex).test(newValue) || (!required && newValue === ''));
-        if(isValid){
-            var modified = position === 'node' ? {nodeModified: true} : {generalModified: true};
-            dispatch({
-                type: 'set', 
-                value: { 
-                    ...modified
-                }
-            });
-        }
+        errorUpdate();
     };
 
     let className = !isValid ? 'invalid' : '';

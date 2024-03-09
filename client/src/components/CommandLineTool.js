@@ -68,7 +68,10 @@ function CommandLineTool() {
   var indexBaseCommand = 0;
   if(object.baseCommand) {
     indexBaseCommand = 150;
-    initialNodes.push(createNode("baseCommand", (object.inputs.length+object.arguments.length)*160/2-80, 'nodeBaseCommand', indexBaseCommand, {typeNode: "baseCommand", value: object.baseCommand}, true));
+    var position = 0;
+    position = (object.inputs) ? position+object.inputs.length : position+0;
+    position = (object.arguments) ? position+object.arguments.length : position+0;
+    initialNodes.push(createNode("baseCommand", position*160/2-80, 'nodeBaseCommand', indexBaseCommand, {typeNode: "baseCommand", value: object.baseCommand}, true));
   }
 
   // Process outputs to create output nodes

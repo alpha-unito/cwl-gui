@@ -7,6 +7,8 @@ const initialState = {
     nodePositions: {},
     generalModified: false,
     nodeModified: false,
+    errorElementsNode: [],
+    errorElementsGeneral: [],
     errorEnabled: ''
 };
 
