@@ -13,7 +13,24 @@ export const workflowOutputs = {
     type: {
         required: true,
         type: ["select"],
-        options: ["File","Directory","string","int","float","long","double","boolean","Any","File[]","Directory[]","string[]","int[]","float[]","long[]","double[]"],
+        options: [
+            "File",
+            "Directory",
+            "string",
+            "int",
+            "float",
+            "long",
+            "double",
+            "boolean",
+            "Any",
+            "File[]",
+            "Directory[]",
+            "string[]",
+            "int[]",
+            "float[]",
+            "long[]",
+            "double[]"
+        ],
     },
     id: {
         required: false,
