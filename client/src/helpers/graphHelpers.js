@@ -1,7 +1,6 @@
 import RenderElement from './../components/RenderElement';
 
 export const renderNode = (element, scheme, parent = '', index='') => {
-    console.log("renderNode", element);
     if(element !== undefined ) {
         return Object.entries(scheme).map(([key, field]) => {
             var currentElement = (element[key] !== undefined) ? element[key] : undefined;

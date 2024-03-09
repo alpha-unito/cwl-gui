@@ -22,7 +22,7 @@ function Actions({ className }) {
   const cwl = useSelector((state) => state.cwl_data);
 
   // Creating a deep clone of the cwl object to avoid directly mutating the state
-  var cwltemp = cloneDeep(cwl.cwlobject);  
+  var cwltemp = cloneDeep(cwl.cwlobject);
   // Extracting type and index from the activeNode identifier
   const type = cwl.activeNode !== "" ? cwl.activeNode.split("_")[0] : undefined;
   var index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
@@ -139,6 +139,12 @@ function Actions({ className }) {
               cwltemp[key] = changeType(formData[key]);
             else delete cwltemp[key]; 
             break;
+          case "step":
+            let correctIndex = cwltemp.steps.length - 1 - indextemp;
+            if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
+              cwltemp[type+"s"][correctIndex][key] = changeType(formData[key]);
+            else delete cwltemp[type+"s"][correctIndex][key]; 
+            break;
           default:
             if(formData[key] !== null || formData[key] !== undefined || formData[key] !== '')
               cwltemp[type+"s"][indextemp][key] = changeType(formData[key]);
@@ -193,7 +199,8 @@ function Actions({ className }) {
           delete updatedCwlObject.baseCommand;
           break;
         case "step":
-          updatedCwlObject.steps.splice(index, 1);
+          let correctIndex = updatedCwlObject.steps.length - 1 - index;
+          updatedCwlObject.steps.splice(correctIndex, 1);
           break;
         case "output":
           updatedCwlObject.outputs.splice(index, 1);
