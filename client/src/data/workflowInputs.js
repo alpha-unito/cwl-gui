@@ -107,7 +107,7 @@ export const workflowInputs = {
     },
     default: {
         required: false,
-        type: ["string"],
+        type: ["string","string[]"],
     },
     inputBinding: {
         required: false,

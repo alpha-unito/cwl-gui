@@ -11,7 +11,7 @@ function NodeStep({ data }) {
     <div id={nodeid} className={`node-base type-step ${classActive}`}>
         <Handle type="target" position={Position.Top} />
         <div className='node-header'>
-          {data.label}
+          <span>{data.label}</span>
         </div>
         <div className='node-content'>
           <p>Run: <span>{data.run}</span></p>

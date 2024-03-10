@@ -1,5 +1,5 @@
 import React from 'react';
-import {determineType} from './../helpers/formHelpers';
+import {determineType, getType} from './../helpers/formHelpers';
 import CompoundElement from './elements/CompoundElement';
 import BaseElement from './elements/BaseElement';
 import ArrayElement from './elements/ArrayElement';
@@ -12,6 +12,7 @@ import ArrayComponentElement from './elements/ArrayComponentElement';
 */
 function RenderElement({ parent='', position, name, element, currentType = '', currentValue = '', index = ''}) {  
   var component;
+  currentValue = name === "type" ? getType(currentValue) : currentValue;
   var type = element.type[0] !== undefined ? element.type[0].replace("?","") : element.type[0];
   if(type === "component") {
     component = Array.isArray(element.component) && element.component.length > 1 ? element.component[0] : element.component;
@@ -20,8 +21,10 @@ function RenderElement({ parent='', position, name, element, currentType = '', c
     component = Array.isArray(element.component) && element.component.length > 1 ? element.component[0] : element.component;
     return <ArrayComponentElement index={index} parent={name} position={position} name={name} element={component} currentValue = {currentValue}/>;
   }else if(Array.isArray(element.type) && element.type.length > 1) {
-    currentValue = currentValue === undefined ? '' : currentValue
+    
+    currentValue = currentValue === undefined ? '' : currentValue;
     currentType = determineType(currentValue);
+    if(name  === "default") console.log("RenderElement Default",currentType );
     return <CompoundElement index={index} parent={parent} position={position} currentType={currentType} currentValue = {currentValue} name={name} element={element} />;
   }else{
     switch (type) {

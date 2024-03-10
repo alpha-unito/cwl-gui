@@ -49,7 +49,7 @@ const workflowStepInput = {
     },
     default: {
         required: false,
-        type: ["string"],
+        type: ["string","string[]"],
     },
     valueFrom: {
         required: false,

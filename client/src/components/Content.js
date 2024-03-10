@@ -29,9 +29,9 @@ function Content({ className }) {
   }
 
   return <div className={className}>
-    <div class="select-type-node">
-      <button class="select-button" onClick={toggleMenu}><FontAwesomeIcon icon={faPlus}/> New node</button>
-      {showMenu && <div class="other-button">
+    <div className="select-type-node">
+      <button className="select-button" onClick={toggleMenu}><FontAwesomeIcon icon={faPlus}/> New node</button>
+      {showMenu && <div className="other-button">
         {!workflow && !object.baseCommand && <button onClick={() => newNode('baseCommand')}>BaseCommand</button>}
         {!workflow && <button onClick={() => newNode('argument')}>Argument</button>}
         <button onClick={() => newNode('input')}>Input</button>

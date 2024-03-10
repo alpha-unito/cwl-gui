@@ -1,6 +1,7 @@
 import { Handle, Position} from 'reactflow';
 import React from 'react';
 import { useSelector  } from 'react-redux';
+import {getType} from './../../helpers/formHelpers';
 
 function NodeInput({ data }) {  
   const node = useSelector((state) => state.cwl_data.activeNode);
@@ -10,10 +11,10 @@ function NodeInput({ data }) {
   return (
     <div id={nodeid} className={`node-base type-input ${classActive}`}>
         <div className='node-header'>
-          {data.label}
+          <span>{data.label}</span>
         </div>
         <div className='node-content'>
-          <p>Type: <span>{data.type}</span></p>
+          <p>Type: <span>{getType(data.type)}</span></p>
           <p>Prefix: <span>{data.prefix}</span></p>
         </div>
         <Handle type="source" position={Position.Bottom}/>

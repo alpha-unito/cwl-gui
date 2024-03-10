@@ -2,6 +2,7 @@ import React from 'react';
 import Graph from './Graph';
 import { useSelector } from 'react-redux';
 import { MarkerType } from 'reactflow';
+import {topologicalSort} from './../helpers/graphHelpers';
 
 // Parses the CWL object into nodes and edges for the Graph component
 const parseCWLObject = (object, savedPositions) => {
@@ -29,7 +30,8 @@ const parseCWLObject = (object, savedPositions) => {
 
   // Processes steps to determine node levels and create edges based on dependencies
   const processSteps = (steps, idCwl) => {
-    [...steps].reverse().forEach((step, index) => {
+    steps = topologicalSort(steps, idCwl);
+    [...steps].forEach((step, index) => {
       const stepId = step.id;
       const levels = processStepInputs(step, stepId, initialEdges, allNodes, idCwl); // Calculate node level based on input dependencies
       allNodes[stepId] = Math.max(0, ...levels); // Set the step node level

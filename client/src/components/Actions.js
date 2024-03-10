@@ -7,7 +7,7 @@ import {cltArgument} from './../data/commandLineToolArgument';
 import {workflowInputs} from './../data/workflowInputs';
 import {workflowOutputs} from './../data/workflowOutputs';
 import {workflowSteps} from './../data/workflowSteps';
-import {renderNode} from './../helpers/graphHelpers';
+import {renderNode, topologicalSort} from './../helpers/graphHelpers';
 import {createFormDataNode, changeType} from './../helpers/formHelpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +23,8 @@ function Actions({ className }) {
 
   // Creating a deep clone of the cwl object to avoid directly mutating the state
   var cwltemp = cloneDeep(cwl.cwlobject);
+  var idCwl = cwltemp.id && cwltemp.id.split("#")[1] ? cwltemp.id.split("#")[1] : "";
+  cwltemp.steps = topologicalSort(cwltemp.steps, idCwl);
   // Extracting type and index from the activeNode identifier
   const type = cwl.activeNode !== "" ? cwl.activeNode.split("_")[0] : undefined;
   var index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
@@ -67,7 +69,7 @@ function Actions({ className }) {
           index = cwltemp.steps.length;
           cwltemp.steps[index] = {run: ""};
         }
-        let stepsArray = [...cwltemp.steps].reverse();
+        let stepsArray = cwltemp.steps;
         render = renderNode(stepsArray[index], steps);
         break;
       case "output":
@@ -138,12 +140,6 @@ function Actions({ className }) {
               cwltemp[key] = changeType(formData[key]);
             else delete cwltemp[key]; 
             break;
-          case "step":
-            let correctIndex = cwltemp.steps.length - 1 - indextemp;
-            if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
-              cwltemp[type+"s"][correctIndex][key] = changeType(formData[key]);
-            else delete cwltemp[type+"s"][correctIndex][key]; 
-            break;
           default:
             if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
               cwltemp[type+"s"][indextemp][key] = changeType(formData[key]);
@@ -198,8 +194,7 @@ function Actions({ className }) {
           delete updatedCwlObject.baseCommand;
           break;
         case "step":
-          let correctIndex = updatedCwlObject.steps.length - 1 - index;
-          updatedCwlObject.steps.splice(correctIndex, 1);
+          updatedCwlObject.steps.splice(index, 1);
           break;
         case "output":
           updatedCwlObject.outputs.splice(index, 1);

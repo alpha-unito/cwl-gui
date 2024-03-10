@@ -136,7 +136,7 @@ export const cltInputs = {
     },
     default: {
         required: false,
-        type: ["string"],
+        type: ["string","string[]"],
     },
     inputBinding: {
         required: false,

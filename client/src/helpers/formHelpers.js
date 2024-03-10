@@ -1,10 +1,6 @@
 export const determineType = (value) => {
     if (Array.isArray(value)) {
-        if (typeof value[0] === 'string') {
         return "string[]";
-        } else if (typeof value[0] === 'number') {
-        return "int[]";
-        }
     } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         return "component";
     } else if (typeof value === 'string') {
@@ -49,7 +45,7 @@ export const createFormDataNode = (event) => {
                         value = {pattern: element.value};
                         formData['secondaryFiles'].push(value);
                     }    
-                    else formData[element.name] = element.value;
+                    else formData = arrayFormData(element, formData, element.value);
                     break;
                 case "required":
                     if(element.getAttribute('data-parent') === 'secondaryFiles'){
@@ -86,7 +82,7 @@ export const createFormDataNode = (event) => {
                         value = {id: element.value};
                         formData['in'].push(value);
                     }    
-                    else formData[element.name] = element.value;
+                    else formData = arrayFormData(element, formData, element.value);
                     break;
                 case "source":
                     if(element.getAttribute('data-parent') === 'in'){
@@ -99,7 +95,7 @@ export const createFormDataNode = (event) => {
                             formData['in'].push(value);
                         } else formData['in'][index] = arrayFormData(element, formData['in'][index], element.value);
                     }    
-                    else formData[element.name] = element.value;
+                    else formData = arrayFormData(element, formData, element.value);
                     break;
                 case "id":
                 case "linkMerge":
@@ -118,8 +114,8 @@ export const createFormDataNode = (event) => {
                             value = {[element.name]: element.value};
                             formData['in'].push(value);
                         } else formData['in'][index][element.name] = element.value;
-                    }    
-                    else formData[element.name] = element.value;
+                    }else formData = arrayFormData(element, formData, element.value);
+                    console.log("Default",formData["default"]);
                     break;
                 default:
                     if(element.getAttribute('data-parent') && element.getAttribute('data-parent')!=="nokey"){
@@ -128,7 +124,7 @@ export const createFormDataNode = (event) => {
                         }
                         formData[element.getAttribute('data-parent')][element.name] = element.value;
                     }
-                    else formData[element.name] = element.value;
+                    else formData = arrayFormData(element, formData, element.value);
             }
         }else formData[element.name] = undefined;
     });
@@ -166,4 +162,26 @@ export const changeType = (value) => {
     }
 
     return value;
+};
+
+export const getType = (type) => {
+    var newType = '';
+    var optional = false;
+    if (Array.isArray(type)) {
+        type.forEach((element) => {
+            if (typeof element === "object" && element !== null) {
+                if (element.type === "array") {
+                    newType = element.items+"[]";
+                }   
+            }else if (element === "null") {
+                optional = true;
+            }else newType = element;
+        });
+    }else if (typeof type === "object" && type !== null) {
+        if (type.type === "array") {
+            newType = type.items+"[]";
+        }  
+    }else newType = type;
+
+    return newType+(optional ? "?" : "");
 };
