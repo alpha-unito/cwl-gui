@@ -52,7 +52,7 @@ function CompoundElement({ parent='', position, name, element, currentType = '',
                 position={position} 
                 key={name + "comp" + i}
                 currentType = {currentType}
-                currentValue = {typeElement!=="component" && typeof currentValue === 'object' ? '' : currentValue}
+                currentValue = {typeElement!=="component" && typeof currentValue === 'object' && !Array.isArray(currentValue) ? '' : currentValue}
                 name={name}
                 element={{ ...element, type: [typeElement] }}
                 parent={parent}

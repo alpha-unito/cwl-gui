@@ -20,8 +20,8 @@ function ArrayElement({ parent  = '', position, name, type, currentValue = '', r
     const [elements, setElements] = useState(() => initializeElements(currentValue, type, required));
 
     useEffect(() => {
-        setElements(initializeElements(currentValue, type, required));
-    }, [currentValue, type, required]);
+        setElements(elements);
+    }, [currentValue, type, required, elements]);
 
 
     function addElementArray() {
