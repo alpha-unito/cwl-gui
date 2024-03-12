@@ -21,10 +21,8 @@ function RenderElement({ parent='', position, name, element, currentType = '', c
     component = Array.isArray(element.component) && element.component.length > 1 ? element.component[0] : element.component;
     return <ArrayComponentElement index={index} parent={name} position={position} name={name} element={component} currentValue = {currentValue}/>;
   }else if(Array.isArray(element.type) && element.type.length > 1) {
-    
     currentValue = currentValue === undefined ? '' : currentValue;
     currentType = determineType(currentValue);
-    if(name  === "default") console.log("RenderElement Default",currentType );
     return <CompoundElement index={index} parent={parent} position={position} currentType={currentType} currentValue = {currentValue} name={name} element={element} />;
   }else{
     switch (type) {

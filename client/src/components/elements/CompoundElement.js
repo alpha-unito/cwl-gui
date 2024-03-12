@@ -46,12 +46,13 @@ function CompoundElement({ parent='', position, name, element, currentType = '',
           if(typeElement === "component[]"){
             return <ArrayComponentElement parent={name} position={position} key={name + "comp" + i} name={name} element={element.component[i]} currentValue = {currentValue}/>;
           }else{
+            
             return (
               <RenderElement
                 position={position} 
                 key={name + "comp" + i}
                 currentType = {currentType}
-                currentValue = {currentValue}
+                currentValue = {typeElement!=="component" && typeof currentValue === 'object' ? '' : currentValue}
                 name={name}
                 element={{ ...element, type: [typeElement] }}
                 parent={parent}

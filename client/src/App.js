@@ -17,7 +17,7 @@ function App() {
         <>
           <Toolbar className="toolbar" />
           <Summary className="summary" />
-          <Content className="content" />
+          <Content className="content" />  
           <Actions className="actions" />
         </>
       ) : (

@@ -24,7 +24,6 @@ function Actions({ className }) {
   // Creating a deep clone of the cwl object to avoid directly mutating the state
   var cwltemp = cloneDeep(cwl.cwlobject);
   var idCwl = cwltemp.id && cwltemp.id.split("#")[1] ? cwltemp.id.split("#")[1] : "";
-  cwltemp.steps = topologicalSort(cwltemp.steps, idCwl);
   // Extracting type and index from the activeNode identifier
   const type = cwl.activeNode !== "" ? cwl.activeNode.split("_")[0] : undefined;
   var index = cwl.activeNode !== "" ? cwl.activeNode.split("_")[1] : undefined;
@@ -51,6 +50,7 @@ function Actions({ className }) {
         inputs = workflowInputs;
         outputs = workflowOutputs;
         steps = workflowSteps;
+        cwltemp.steps = topologicalSort(cwltemp.steps, idCwl);
         break;
       default:
     }
@@ -139,6 +139,16 @@ function Actions({ className }) {
             if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
               cwltemp[key] = changeType(formData[key]);
             else delete cwltemp[key]; 
+            break;
+          case "argument":
+            if(formData["nokey"] === undefined){
+              if(typeof cwltemp[type+"s"][indextemp] !== 'object') cwltemp[type+"s"][indextemp] = {};
+              if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
+                cwltemp[type+"s"][indextemp][key] = changeType(formData[key]);
+              else delete cwltemp[type+"s"][indextemp][key];
+            }else{
+              cwltemp[type+"s"][indextemp] = changeType(formData["nokey"]); 
+            }
             break;
           default:
             if(formData[key] !== null && formData[key] !== undefined && formData[key] !== '')
