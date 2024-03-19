@@ -18,6 +18,12 @@ function Exception({ content, className, title}) {
     });
   };
 
+  function resetCwl () {
+    dispatch({ 
+      type: 'reset'
+    });
+  };
+
   return (
     <div className={className}>
       <div className='main'>
@@ -28,6 +34,8 @@ function Exception({ content, className, title}) {
         <div className='content'>
             {content}
         </div>
+        <button onClick={resetError} type="button" className="button">Stay</button>
+        <button onClick={resetCwl} type="button" className="button">Cwl Reset</button>
       </div>
     </div>
   );
