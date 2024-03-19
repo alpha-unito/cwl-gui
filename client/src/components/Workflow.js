@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Graph from './Graph';
 import { useSelector } from 'react-redux';
 import { MarkerType } from 'reactflow';
 import {topologicalSort} from './../helpers/graphHelpers';
+import { useDispatch } from 'react-redux';
 
 // Parses the CWL object into nodes and edges for the Graph component
 const parseCWLObject = (object, savedPositions) => {
@@ -138,8 +139,34 @@ const parseCWLObject = (object, savedPositions) => {
 function Workflow() {
   const cwlObject = useSelector((state) => state.cwl_data.cwlobject);
   const savedPositions = useSelector((state) => state.cwl_data.nodePositions);
+  const currentError = useSelector((state) => state.cwl_data.errorMessage);
+  const dispatch = useDispatch();
 
-  const { initialNodes, initialEdges } = parseCWLObject(cwlObject, savedPositions);
+  const [initialNodes, setInitialNodes] = useState([]);
+  const [initialEdges, setInitialEdges] = useState([]);
+
+  useEffect(() => {
+    const processCWL = (cwlObject, savedPositions) => {
+      try {
+        const { initialNodes, initialEdges } = parseCWLObject(cwlObject, savedPositions);
+        setInitialNodes(initialNodes);
+        setInitialEdges(initialEdges);
+      } catch (error) {
+        let message = "Error processing CWL object. Check compatibility. "+error.toString();
+        if (message !== currentError) {
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorMessage: message,
+              errorEnabled: true,
+            } 
+          });
+        }    
+      }
+    };
+
+    processCWL(cwlObject, savedPositions);
+  }, [cwlObject, savedPositions, currentError, dispatch]);
 
   return <Graph initialNodes={initialNodes} initialEdges={initialEdges} />;
 }

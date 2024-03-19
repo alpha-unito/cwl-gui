@@ -115,7 +115,6 @@ export const createFormDataNode = (event) => {
                             formData['in'].push(value);
                         } else formData['in'][index][element.name] = element.value;
                     }else formData = arrayFormData(element, formData, element.value);
-                    console.log("Default",formData["default"]);
                     break;
                 default:
                     if(element.getAttribute('data-parent') && element.getAttribute('data-parent')!=="nokey"){
@@ -182,6 +181,6 @@ export const getType = (type) => {
             newType = type.items+"[]";
         }  
     }else newType = type;
-
+    
     return newType+(optional ? "?" : "");
 };

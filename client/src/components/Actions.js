@@ -20,6 +20,7 @@ import cloneDeep from 'lodash/cloneDeep';
  */
 function Actions({ className }) {
   const cwl = useSelector((state) => state.cwl_data);
+  const activeNodeType = cwl.activeNodeType;
 
   // Creating a deep clone of the cwl object to avoid directly mutating the state
   var cwltemp = cloneDeep(cwl.cwlobject);
@@ -82,7 +83,7 @@ function Actions({ className }) {
           index = cwltemp.outputs.length;
           cwltemp.outputs[index] = {type: "File"};
         }
-        render = renderNode(cwltemp.outputs[index], outputs);
+        render = renderNode(cwltemp.outputs[index], outputs, '', '', activeNodeType);
         break;
       case "input":
         if(cwltemp.inputs === undefined){
@@ -94,7 +95,7 @@ function Actions({ className }) {
           index = cwltemp.inputs.length;
           cwltemp.inputs[index] = {type: "File"};
         }
-        render = renderNode(cwltemp.inputs[index], inputs);
+        render = renderNode(cwltemp.inputs[index], inputs, '', '', activeNodeType);
         break;
       case "argument":
         if(cwltemp.arguments === undefined){

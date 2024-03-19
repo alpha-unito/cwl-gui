@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Graph from './Graph';
 import { MarkerType } from 'reactflow';
-
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function CommandLineTool() {
-  const object = useSelector((state) => state.cwl_data.cwlobject);
-  const savedPositions = useSelector((state) => state.cwl_data.nodePositions);
+const parseCWLObject = (object, savedPositions) => {
   const initialEdges = []; // Array to hold all edges for rendering
   const initialNodes = []; // Array to hold all nodes for rendering
   let currentIndex = 0; // Index to track the position of nodes horizontally
@@ -90,6 +88,41 @@ function CommandLineTool() {
     });    
   }
 
+  return { initialNodes, initialEdges };
+
+};
+
+function CommandLineTool() {
+  const object = useSelector((state) => state.cwl_data.cwlobject);
+  const savedPositions = useSelector((state) => state.cwl_data.nodePositions);
+  const currentError = useSelector((state) => state.cwl_data.errorMessage);
+  const dispatch = useDispatch();
+
+  const [initialNodes, setInitialNodes] = useState([]);
+  const [initialEdges, setInitialEdges] = useState([]);
+
+  useEffect(() => {
+    const processCWL = (object, savedPositions) => {
+      try {
+        const { initialNodes, initialEdges } = parseCWLObject(object, savedPositions);
+        setInitialNodes(initialNodes);
+        setInitialEdges(initialEdges);
+      } catch (error) {
+        let message = "Error processing CWL object. Check compatibility. "+error.toString();
+        if (message !== currentError) {
+          dispatch({ 
+            type: 'set', 
+            value: { 
+              errorMessage: message,
+              errorEnabled: true,
+            } 
+          });
+        }    
+      }
+    };
+
+    processCWL(object, savedPositions);
+  }, [object, savedPositions, currentError, dispatch]);
 
   return <Graph initialNodes={initialNodes} initialEdges={initialEdges} />;
 }

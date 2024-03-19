@@ -5,7 +5,7 @@ import { useDispatch  } from 'react-redux';
 /*
 * SelectElement: This component is used to create a select element.         
 */
-function SelectElement({ parent='', position, name, currentValue = '', options = [] , index = ''}) {
+function SelectElement({ parent='', position, name, currentValue = '', options = [] , index = '', change = undefined}) {
     const [selectedValue, setSelectedValue] = useState(currentValue);
     const dispatch = useDispatch();
 
@@ -13,7 +13,7 @@ function SelectElement({ parent='', position, name, currentValue = '', options =
         setSelectedValue(currentValue);
     }, [currentValue]);
 
-    const handleChange = (event) => {
+    const handleChange = (event, change) => {
         const newValue = event.target.value;
         setSelectedValue(newValue);
 
@@ -21,16 +21,25 @@ function SelectElement({ parent='', position, name, currentValue = '', options =
         dispatch({
             type: 'set', 
             value: { 
-                ...modified
+                ...modified,
             }
         });
+
+        if(change !== undefined){
+            dispatch({
+                type: 'set', 
+                value: { 
+                    activeNodeType: newValue,
+                }
+            });
+        }
     };
 
     return (
         <>
             <select
                 value={selectedValue}
-                onChange={handleChange}
+                onChange={(event) => handleChange(event, change)}
                 name={name}
                 data-parent={parent}
                 data-index={index}

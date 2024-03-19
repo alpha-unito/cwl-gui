@@ -45,6 +45,7 @@ function Graph({initialNodes, initialEdges}) {
       type: 'set', 
       value: { 
         activeNode: nodeid,
+        activeNodeType: node.data.type !== undefined ? node.data.type : '',
       } 
     });
   };
@@ -104,7 +105,6 @@ function Graph({initialNodes, initialEdges}) {
         nodePositions: { ...cwl.nodePositions, [newid]: node.position }
       } 
     });
-    console.log(node.position );
   }, [dispatch, cwl]);
 
   return (

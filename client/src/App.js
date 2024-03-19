@@ -26,7 +26,7 @@ function App() {
           <Uploader className="filemanager" />
         </div>
       )}
-      {cwl.errorEnabled && <Exception content={cwl.errorEnabled} className="exception" title="CWL Exception"/>}
+      {cwl.errorEnabled && cwl.errorMessage!=='' && <Exception content={cwl.errorMessage} className="exception" title="CWL Exception"/>}
     </div>
   );
 }

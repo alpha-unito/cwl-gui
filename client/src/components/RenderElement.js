@@ -38,7 +38,11 @@ function RenderElement({ parent='', position, name, element, currentType = '', c
       case "int":
         return <BaseElement index={index} parent={parent} position={position} currentValue = {currentValue} type="number" name={name} required={element.required} regex={element.validation.regex[0]} message={element.validation.message[0]} />;
       case "select":
-        return <SelectElement index={index} parent={parent} position={position} currentValue = {currentValue} name={name} options={element.options}/>;
+        let onTypeChange = undefined;
+        if(name === "type") {
+          onTypeChange = "activeNodeType";
+        }
+        return <SelectElement index={index} parent={parent} position={position} currentValue = {currentValue} name={name} options={element.options} change={onTypeChange}/>;
       case "boolean":
         return <SelectElement index={index} parent={parent} position={position} currentValue = {currentValue} name={name} options={["","false","true"]}/>;
       case "enum":

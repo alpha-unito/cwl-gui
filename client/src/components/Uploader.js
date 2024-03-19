@@ -81,7 +81,8 @@ function Uploader({ className }) {
           dispatch({ 
             type: 'set', 
             value: { 
-              errorEnabled: data.message,
+              errorMessage: data.message,
+              errorEnabled: true,
             } 
           });  
         }

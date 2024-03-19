@@ -9,7 +9,9 @@ const initialState = {
     nodeModified: false,
     errorElementsNode: [],
     errorElementsGeneral: [],
-    errorEnabled: ''
+    errorEnabled: false,
+    errorMessage: '',
+    activeNodeType: ''
 };
 
 /**
