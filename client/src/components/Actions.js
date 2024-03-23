@@ -179,10 +179,12 @@ function Actions({ className }) {
             } 
           });        
         }else{
+          console.log("yessss");
           dispatch({ 
             type: 'set', 
             value: { 
-              errorEnabled: data.message,
+              errorEnabled: true,
+              errorMessage: data.message
             } 
           });  
         }
@@ -191,7 +193,8 @@ function Actions({ className }) {
         dispatch({ 
           type: 'set', 
           value: { 
-            errorEnabled: error,
+            errorEnabled: true,
+            errorMessage: error.toString()
           } 
         }); 
       });
