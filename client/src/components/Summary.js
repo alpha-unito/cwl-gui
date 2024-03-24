@@ -80,9 +80,8 @@ function Summary({ className }) {
           } 
         });  
       });
-
+      setPrevEditor(0);
     }
-    setPrevEditor(0);
   }, [editor, prevEditor, setPrevEditor, APP_SERVER_URL, cwl, dispatch]);
 
 
