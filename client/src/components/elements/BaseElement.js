@@ -35,11 +35,15 @@ function BaseElement({ parent='', position, name, type, required = false, readOn
     
 
     useEffect(() => {
-        errorUpdate();
+        if(currentValue !== inputValue){
+          errorUpdate();  
+        }
     }, [errorUpdate]);
 
     useEffect(() => {
-        setInputValue(currentValue);
+        if(currentValue !== inputValue){
+            setInputValue(currentValue);    
+        } 
     }, [currentValue]);
     
     const handleChange = (event) => {

@@ -179,7 +179,7 @@ function Actions({ className }) {
             } 
           });        
         }else{
-          console.log("yessss");
+
           dispatch({ 
             type: 'set', 
             value: { 
@@ -270,6 +270,7 @@ function Actions({ className }) {
         <p><strong>{type}</strong></p>
         <button type="button"  onClick={deleteNode}><FontAwesomeIcon icon={faTrash} /> Delete node</button>
       </div>
+      
       <button 
         className={`update button ${!cwl.nodeModified ? 'disable' : ''}`}>
         <FontAwesomeIcon icon={faArrowsRotate} /> Update Node

@@ -46,6 +46,7 @@ function Graph({initialNodes, initialEdges}) {
       value: { 
         activeNode: nodeid,
         activeNodeType: node.data.type !== undefined ? node.data.type : '',
+        nodeModified: false
       } 
     });
   };

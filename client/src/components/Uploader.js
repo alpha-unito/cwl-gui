@@ -90,8 +90,9 @@ function Uploader({ className }) {
       .catch(error => {
         dispatch({ 
           type: 'set', 
-          value: { 
-            errorEnabled: error,
+          value: {
+            errorMessage: error.toString(),
+            errorEnabled: true
           } 
         });       
       });
