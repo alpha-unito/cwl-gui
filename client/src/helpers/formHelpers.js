@@ -121,9 +121,9 @@ export const createFormDataNode = (event) => {
                         if (!formData[element.getAttribute('data-parent')]) {
                             formData[element.getAttribute('data-parent')] = {};
                         }
-                        formData[element.getAttribute('data-parent')][element.name] = element.value;
+                        formData[element.getAttribute('data-parent')][element.name] = changeType(element.value);
                     }
-                    else formData = arrayFormData(element, formData, element.value);
+                    else formData = arrayFormData(element, formData, changeType(element.value));
             }
         }else formData[element.name] = undefined;
     });
@@ -132,6 +132,7 @@ export const createFormDataNode = (event) => {
 };
 
 const arrayFormData = (element, formData, value) => {
+    value = changeType(value);
     if (formData.hasOwnProperty(element.name)) {
         if (Array.isArray(formData[element.name])) {
           formData[element.name].push(value);

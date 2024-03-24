@@ -38,12 +38,10 @@ function BaseElement({ parent='', position, name, type, required = false, readOn
         if(currentValue !== inputValue){
           errorUpdate();  
         }
-    }, [errorUpdate]);
+    }, [errorUpdate, currentValue, inputValue]);
 
     useEffect(() => {
-        if(currentValue !== inputValue){
-            setInputValue(currentValue);    
-        } 
+        setInputValue(currentValue);    
     }, [currentValue]);
     
     const handleChange = (event) => {
