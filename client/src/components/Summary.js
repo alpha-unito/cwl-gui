@@ -64,10 +64,12 @@ function Summary({ className }) {
             } 
           });          
         }else{
+          console.log(data.message);
           dispatch({ 
             type: 'set', 
             value: { 
-              errorEnabled: data.message,
+              errorEnabled: true,
+              errorMessage: data.message,
             } 
           });  
         }
@@ -76,12 +78,14 @@ function Summary({ className }) {
         dispatch({ 
           type: 'set', 
           value: { 
-            errorEnabled: error,
+            errorEnabled: true,
+            errorMessage: error.toString(),
           } 
         });  
-      });
+      }); 
       setPrevEditor(0);
     }
+    
   }, [editor, prevEditor, setPrevEditor, APP_SERVER_URL, cwl, dispatch]);
 
 
@@ -148,7 +152,8 @@ function Summary({ className }) {
         dispatch({ 
           type: 'set', 
           value: { 
-            errorEnabled: data.message,
+            errorEnabled: true,
+            errorMessage: data.message,
           } 
         });  
       }
@@ -157,7 +162,8 @@ function Summary({ className }) {
       dispatch({ 
         type: 'set', 
         value: { 
-          errorEnabled: error,
+          errorEnabled: true,
+          errorMessage: error.toString(),
         } 
       });  
     });

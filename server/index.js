@@ -33,7 +33,7 @@ app.post('/api/data', (req, res) => {
         if(e instanceof cwlTsAuto.ValidationException) {
             res.json({ result: false, message: e.toString() });
         } else {
-            res.json({ result: false, message: e });
+            res.json({ result: false, message: e.toString() });
         }
     })
 });
