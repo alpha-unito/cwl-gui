@@ -40,21 +40,21 @@ Installation
    npm start
 
 How to Use
-Upload or Create a Workflow: start by uploading an existing CWL file or create a new workflow from scratch.
-Editing the Workflow: use the interactive graph editor to add, modify, or delete steps in your workflow. Use the code editor to directly modify the CWL file.
-Export: once the changes are made, export the updated CWL file for use in other CWL-supported systems.
+1. Upload or Create a Workflow: start by uploading an existing CWL file or create a new workflow from scratch.
+2. Editing the Workflow: use the interactive graph editor to add, modify, or delete steps in your workflow. Use the code editor to directly modify the CWL file.
+3. Export: once the changes are made, export the updated CWL file for use in other CWL-supported systems.
 
 Libraries Required
-React: a JavaScript library for building user interfaces
-Redux: state management for React
-Monaco Editor: code editor used for the CWL text interface
-React Flow: provides the interactive graph structure for visualizing CWL workflows
-Node.js and Express: server-side technologies to handle CWL file parsing and API calls
+- React: a JavaScript library for building user interfaces
+- Redux: state management for React
+- Monaco Editor: code editor used for the CWL text interface
+- React Flow: provides the interactive graph structure for visualizing CWL workflows
+- Node.js and Express: server-side technologies to handle CWL file parsing and API calls
 
 Future Enhancements
-Support for additional CWL file types
-Advanced error handling for CWL file validation
-Performance improvements for handling larger workflows
+- Support for additional CWL file types
+- Advanced error handling for CWL file validation
+- Performance improvements for handling larger workflows
 
    
   
