@@ -20,24 +20,24 @@ Prerequisites
 
 Installation
 1. Clone the repository:
-   git clone https://github.com/alpha-unito/cwl-gui.git
-   cd cwl-gui
+   - git clone https://github.com/alpha-unito/cwl-gui.git
+   - cd cwl-gui
 2. Install dependencies client
-   Starting from root folder
-   cd client
-   npm install
+   - Starting from root folder
+   - cd client
+   - npm install
 4. Install dependencies server
-   Starting from root folder
-   cd server
-   npm install
+   - Starting from root folder
+   - cd server
+   - npm install
 5. Start server
-   Starting from root folder
-   cd server
-   node index.js
+   - Starting from root folder
+   - cd server
+   - node index.js
 7. Start client
-   Starting from root folder
-   cd client
-   npm start
+   - Starting from root folder
+   - cd client
+   - npm start
 
 How to Use
 1. Upload or Create a Workflow: start by uploading an existing CWL file or create a new workflow from scratch.
