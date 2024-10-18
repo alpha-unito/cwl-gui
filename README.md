@@ -1,6 +1,6 @@
 # CWL-GUI
 
-CWL-GUI is an open-source web application designed for the visualization, creation, and editing of workflows in the Common Workflow Language (CWL). Built with the React framework, this tool provides an intuitive graphical interface that allows users to manage CWL workflows more efficiently without deep knowledge of the underlying CWL standard. It is designed to help scientists and researchers in fields such as bioinformatics, medical imaging, astronomy, and machine learning, where complex workflows are a necessity.
+CWL-GUI is an open-source web application designed for the visualization, creation and editing of workflows in the Common Workflow Language (CWL). Built with the React framework, this tool provides an intuitive graphical interface that allows users to manage CWL workflows more efficiently without deep knowledge of the underlying CWL standard. It is designed to help scientists and researchers in fields such as bioinformatics, medical imaging, astronomy, and machine learning, where complex workflows are a necessity.
 
 ## Features
 
