@@ -1,7 +1,7 @@
 {
   "name": "cwl-gui",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "license": "LGPL-3.0-or-later",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
